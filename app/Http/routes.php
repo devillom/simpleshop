@@ -25,10 +25,13 @@ Route::group(['middleware' => 'web'], function () {
 
 
 Route::group(['middleware' => ['web','admin'],'prefix' => 'manager'], function () {
-   Route::get('/','Backend\HomeController@index');
+    Route::get('/','Backend\HomeController@index')->name('manager.index');
 
+    //User manager
     Route::resource('users', 'Backend\UserController');
     Route::post('users/{user}/ban', 'Backend\UserController@ban')->name('manager.users.ban');
     Route::get('users/{user}/unban', 'Backend\UserController@unban')->name('manager.users.unban');
+
+    
 
 });

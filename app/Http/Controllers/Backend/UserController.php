@@ -61,7 +61,6 @@ class UserController extends Controller
 
         $user->roles()->sync($data['roles']);
         return redirect()->back()->with(['message' => 'Сохранен']);
-
     }
 
     /**
@@ -94,7 +93,6 @@ class UserController extends Controller
         );
 
         $user->roles()->attach($role);
-
         return redirect()->route('manager.users.edit', ['user' => $user->id])->with(['message' => 'Сохранен']);
     }
 
@@ -140,15 +138,9 @@ class UserController extends Controller
      */
     public function unban(Request $request, User $user)
     {
-
-        if (Auth::user()->id != $user->id) {
-            $user->is_banned = true;
-            $user->save();
-            Session::flash('message', 'Пользователь заблокирован');
-            return redirect()->route('manager.users.index');
-        } else {
-            Session::flash('error', 'Вы не можете заблокировать себя');
-            return redirect()->route('manager.users.index');
-        }
+        $user->is_banned = false;
+        $user->save();
+        Session::flash('message', 'Пользователь разблокирован');
+        return redirect()->route('manager.users.index');
     }
 }

@@ -28,9 +28,16 @@
     <nav class="uk-navbar">
         <a href="" class="uk-navbar-brand">Simple-Shop v 0.1</a>
         <ul class="uk-navbar-nav">
-            <li><a href="" >Главная</a></li>
+            <li><a href="{{route('manager.index')}}" >Главная</a></li>
             <li><a href="{{route('manager.users.index')}}" >Пользователи</a></li>
-            <li><a href="" >Магазин</a></li>
+            <li class="uk-parent" data-uk-dropdown><a href="" >Магазин</a>
+                <div class="uk-dropdown uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        <li><a href="">Категории</a></li>
+                        <li><a href="">Товары</a></li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </nav>
 </div>
@@ -47,6 +54,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{{ asset('bower_components/vue/dist/vue.js') }}"></script>
+<script src="{{ asset('bower_components/uikit/js/uikit.js') }}"></script>
 <script src="{{ asset('bower_components/vue-resource/dist/vue-resource.js') }}"></script>
 <script src="{{ asset('js/backend/app.js') }}"></script>
 </body>
