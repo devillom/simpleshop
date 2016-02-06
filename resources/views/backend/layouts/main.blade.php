@@ -29,7 +29,7 @@
         <a href="" class="uk-navbar-brand">Simple-Shop v 0.1</a>
         <ul class="uk-navbar-nav">
             <li><a href="" >Главная</a></li>
-            <li><a href="" >Пользователи</a></li>
+            <li><a href="{{route('manager.users.index')}}" >Пользователи</a></li>
             <li><a href="" >Магазин</a></li>
         </ul>
     </nav>
@@ -37,6 +37,8 @@
 
 <div class="uk-container uk-container-center">
    <div class="main-content">
+       @include('backend.messages')
+
        @yield('content')
    </div>
 </div>

@@ -2,5 +2,6 @@
 
 
 @section('content')
-    <h1>This is admin Page</h1>
+    <h1>Главная</h1>
+    <p>Добро пожаловать Админ!</p>
 @endsection
