@@ -30,8 +30,13 @@ Route::group(['middleware' => ['web','admin'],'prefix' => 'manager'], function (
     //User manager
     Route::resource('users', 'Backend\UserController');
     Route::post('users/{user}/ban', 'Backend\UserController@ban')->name('manager.users.ban');
-    Route::get('users/{user}/unban', 'Backend\UserController@unban')->name('manager.users.unban');
+    Route::post('users/{user}/unban', 'Backend\UserController@unban')->name('manager.users.unban');
 
-    
+    //Shop Category
+
+    Route::group(['prefix' => 'shop'], function () {
+        Route::resource('categories', 'Backend\ShopCategoryController');
+    });
+
 
 });

@@ -6,8 +6,8 @@
     <div class="uk-text-right">
         <div class="uk-button-group">
             <a class="uk-button uk-button-success" href="{{route('manager.users.create')}}">Создать</a>
-            <button class="uk-button uk-badge-danger">Удалить</button>
-            <button class="uk-button uk-badge-warning">Заблокировать</button>
+            {{--<button class="uk-button uk-badge-danger">Удалить</button>--}}
+            {{--<button class="uk-button uk-badge-warning">Заблокировать</button>--}}
         </div>
     </div>
     {{--{{$users}}--}}
@@ -40,8 +40,8 @@
 
                     {!! Form::open(['route' => ['manager.users.destroy',$user->id] ,'method'=>'delete'])!!}
                     <a href="{{ route('manager.users.edit', ['users' => $user->id])}}" class="uk-button uk-button-primary">
-                        <i class="uk-icon uk-icon-edit"></i> Изменить</a>
-                    <button type="submit" class="uk-button uk-button-danger"><i class="uk-icon uk-icon-trash"></i> Удалить</button>
+                        <i class="uk-icon uk-icon-edit"></i> </a>
+                    <button type="submit" class="uk-button uk-button-danger"><i class="uk-icon uk-icon-trash"></i> </button>
                     {!! Form::close() !!}
 
                 </td>
@@ -52,7 +52,7 @@
                         {!! Form::close() !!}
                     @else
                         {!! Form::open(['route' => ['manager.users.unban',$user->id] ,'method'=>'post'])!!}
-                        <button type="submit" class="uk-button uk-button-danger"><i class="uk-icon uk-icon-ban"></i> Разбанить</button>
+                        <button type="submit" class="uk-button uk-button-primary"><i class="uk-icon uk-icon-ban"></i> Разбанить</button>
                         {!! Form::close() !!}
                     @endif
                 </td>

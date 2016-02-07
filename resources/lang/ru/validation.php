@@ -121,9 +121,10 @@ return [
     */
 
     'attributes'           => [
-        'username' =>  'Имя',
-        'email'    =>  'Email',
-        'password' =>  'Пароль'
+        'username' =>  'имя',
+        'email'    =>  'email',
+        'password' =>  'пароль',
+        'roles' => 'роль'
      ],
 
 ];

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Backend;
 
 use App\Http\Requests\Request;
 
-class UserStoreRequest extends Request
+class ShopCategoryUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,9 @@ class UserStoreRequest extends Request
     public function rules()
     {
         return [
-
-            'username' => 'required|unique:users,name',
-            'email' => 'required|unique:users,email',
-            'password' => 'required',
-            'roles'=>'required|exists:roles,id'
+            'name' => 'required|unique:shop_categories,name,'.$this->get('id'),
+            'content' => 'max: 500',
+            'parent_id' => 'exists:shop_categories,id'
         ];
-
     }
 }

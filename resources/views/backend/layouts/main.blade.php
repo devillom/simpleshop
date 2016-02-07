@@ -9,6 +9,7 @@
 
 
     <link href="{{ asset('bower_components/uikit/css/uikit.almost-flat.css') }}" rel="stylesheet">
+    <link href="{{ asset('bower_components/uikit/css/components/nestable.css') }}" rel="stylesheet">
 
 
 
@@ -33,7 +34,7 @@
             <li class="uk-parent" data-uk-dropdown><a href="" >Магазин</a>
                 <div class="uk-dropdown uk-dropdown-navbar">
                     <ul class="uk-nav uk-nav-navbar">
-                        <li><a href="">Категории</a></li>
+                        <li><a href="{{route('manager.shop.categories.index')}}">Категории</a></li>
                         <li><a href="">Товары</a></li>
                     </ul>
                 </div>
@@ -55,6 +56,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{{ asset('bower_components/vue/dist/vue.js') }}"></script>
 <script src="{{ asset('bower_components/uikit/js/uikit.js') }}"></script>
+<script src="{{ asset('bower_components/uikit/js/components/nestable.js') }}"></script>
 <script src="{{ asset('bower_components/vue-resource/dist/vue-resource.js') }}"></script>
 <script src="{{ asset('js/backend/app.js') }}"></script>
 </body>

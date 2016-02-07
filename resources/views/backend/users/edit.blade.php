@@ -3,7 +3,7 @@
 @section('content')
 
     <h1>{{$user->name}}</h1>
-    {!! Form::open(['route' => ['manager.users.update', $user->id] ,'method'=>'put','class' => 'uk-form'])!!}
+    {!! Form::open(['route' => ['manager.users.update', $user->id] ,'method'=>'patch','class' => 'uk-form'])!!}
     <div class="uk-form-row ">
         {!! Form::text('username',$user->name,['class'=>'uk-form-width-large','placeholder'=>'Введите имя']) !!}
     </div>

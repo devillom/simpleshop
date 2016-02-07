@@ -27,8 +27,7 @@ class UserUpdateRequest extends Request
 
             'username' => 'required|unique:users,name,'.$this->get('id'),
             'email' => 'required|unique:users,email,'.$this->get('id'),
-            'password' => 'required',
-            'roles.*'=>'exists:roles,id'
+            'roles.*'=>'required|exists:roles,id'
         ];
     }
 }

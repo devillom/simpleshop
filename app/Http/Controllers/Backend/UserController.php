@@ -48,18 +48,22 @@ class UserController extends Controller
      * @param $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(UserUpdateRequest $request, $user)
     {
+        $user = User::findOrFail($user);
         $data = $request->all();
         $user->update(
             [
                 'name' => $data['username'],
                 'email' => $data['email'],
-                'password' => Hash::make($data['password']),
+                'password' => ($data['password'])?Hash::make($data['password']):$user->password,
             ]
         );
 
-        $user->roles()->sync($data['roles']);
+        if(count($data['roles'])){
+            $user->roles()->sync($data['roles']);
+        }
+
         return redirect()->back()->with(['message' => 'Сохранен']);
     }
 
@@ -84,7 +88,8 @@ class UserController extends Controller
     {
         $data = $request->all();
         $user = new User();
-        return $user->create(
+
+        $user = $user->create(
             [
                 'name' => $data['username'],
                 'email' => $data['email'],
@@ -92,7 +97,7 @@ class UserController extends Controller
             ]
         );
 
-        $user->roles()->attach($role);
+        $user->roles()->attach($data['roles']);
         return redirect()->route('manager.users.edit', ['user' => $user->id])->with(['message' => 'Сохранен']);
     }
 
@@ -103,8 +108,9 @@ class UserController extends Controller
      * @param $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request, User $user)
+    public function destroy(Request $request, $user)
     {
+        $user = User::findorFail($user);
         if (Auth::user()->id != $user->id) {
             $user->delete();
             Session::flash('message', 'Пользователь удален');
