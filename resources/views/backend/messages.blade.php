@@ -9,13 +9,18 @@
 @endif
 
 @if(Session::has('message'))
-    <div class="uk-alert uk-alert-success">
-        {{Session::get('message')}}
-    </div>
+    @section('scripts')
+        <script>
+            toastr.success('{{Session::get('message')}}','Сообщение системы');
+        </script>
+    @endsection
 @endif
 
+
 @if(Session::has('error'))
-    <div class="uk-alert uk-alert-warning">
-        {{Session::get('error')}}
-    </div>
+    @section('scripts')
+        <script>
+            toastr.error('{{Session::get('error')}}','Сообщение системы');
+        </script>
+    @endsection
 @endif

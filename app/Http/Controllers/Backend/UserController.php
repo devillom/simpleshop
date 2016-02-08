@@ -24,7 +24,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with(['roles'])->orderBy('created_at', 'asc')->get();
-        return view('backend.users.index', compact('users'));
+        return view('backend.user.index', compact('users'));
     }
 
     /**
@@ -34,11 +34,10 @@ class UserController extends Controller
      * @param $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Request $request, $user)
+    public function edit(Request $request, User $user)
     {
-        $user = User::findOrFail($user);
-        $roles = Role::lists('name', 'id');
-        return view('backend.users.edit', compact('user', 'roles'));
+        $roles = Role::lists('name', 'id')->toArray();
+        return view('backend.user.edit', compact('user', 'roles'));
     }
 
     /**
@@ -48,23 +47,26 @@ class UserController extends Controller
      * @param $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UserUpdateRequest $request, $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        $user = User::findOrFail($user);
-        $data = $request->all();
         $user->update(
+            $request->only('email','password')+
             [
-                'name' => $data['username'],
-                'email' => $data['email'],
-                'password' => ($data['password'])?Hash::make($data['password']):$user->password,
+                'name' => $request->get('username'),
+                'email' => $request->get('email')
             ]
         );
 
-        if(count($data['roles'])){
-            $user->roles()->sync($data['roles']);
+        if($request->has('password')){
+            $user->update(
+                $request->only('email','password')+
+                [
+                    'password' => Hash::make($request->get('password'))
+                ]
+            );
         }
-
-        return redirect()->back()->with(['message' => 'Сохранен']);
+        $user->roles()->sync($request->get('roles'));
+        return redirect()->route('manager.user.index')->with(['message' => 'Сохранен']);
     }
 
     /**
@@ -74,8 +76,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::lists('name', 'id');
-        return view('backend.users.create', compact('roles'));
+        $roles = Role::lists('name', 'id')->toArray();
+        return view('backend.user.create', compact('roles'));
     }
 
     /**
@@ -86,19 +88,16 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        $data = $request->all();
-        $user = new User();
-
-        $user = $user->create(
+        $user = User::create(
+            $request->only('email','password')+
             [
-                'name' => $data['username'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
+                'name' => $request->get('username'),
+                'email' => $request->get('email'),
+                'password' => Hash::make($request->get('password'))
             ]
         );
-
-        $user->roles()->attach($data['roles']);
-        return redirect()->route('manager.users.edit', ['user' => $user->id])->with(['message' => 'Сохранен']);
+        $user->roles()->attach($request->get('roles'));
+        return redirect()->route('manager.user.index')->with(['message' => 'Сохранен']);
     }
 
     /**
@@ -108,16 +107,15 @@ class UserController extends Controller
      * @param $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request, $user)
+    public function destroy(Request $request, User $user)
     {
-        $user = User::findorFail($user);
         if (Auth::user()->id != $user->id) {
             $user->delete();
             Session::flash('message', 'Пользователь удален');
-            return redirect()->route('manager.users.index');
+            return redirect()->route('manager.user.index');
         } else {
             Session::flash('error', 'Вы не можете удалить себя');
-            return redirect()->route('manager.users.index');
+            return redirect()->route('manager.user.index');
         }
     }
 
@@ -128,10 +126,10 @@ class UserController extends Controller
             $user->is_banned = true;
             $user->save();
             Session::flash('message', 'Пользователь заблокирован');
-            return redirect()->route('manager.users.index');
+            return redirect()->route('manager.user.index');
         } else {
             Session::flash('error', 'Вы не можете заблокировать себя');
-            return redirect()->route('manager.users.index');
+            return redirect()->route('manager.user.index');
         }
     }
 
@@ -147,6 +145,6 @@ class UserController extends Controller
         $user->is_banned = false;
         $user->save();
         Session::flash('message', 'Пользователь разблокирован');
-        return redirect()->route('manager.users.index');
+        return redirect()->route('manager.user.index');
     }
 }

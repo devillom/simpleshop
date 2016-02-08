@@ -162,6 +162,9 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
+        Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
+        Folklore\Image\ImageServiceProvider::class,
 
     ],
 
@@ -212,6 +215,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Image' => Folklore\Image\Facades\Image::class,
 
 
 

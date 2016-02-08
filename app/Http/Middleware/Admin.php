@@ -16,7 +16,7 @@ class Admin
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if(Auth::guard($guard)->check() && !Auth::guard($guard)->user()->hasRole('admin')){
+        if(!Auth::guard($guard)->user()->hasRole('admin')){
             return response('Unauthorized.', 401);
         }
         return $next($request);

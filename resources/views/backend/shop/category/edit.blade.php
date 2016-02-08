@@ -1,9 +1,12 @@
 @extends('backend.layouts.main')
-
+@section('title', 'Редактировать: '.$category->name )
 @section('content')
     <h1>{{$category->name}}</h1>
 
-    {!! Form::open(['route' => ['manager.shop.categories.update',$category->id] ,'method'=>'patch','class' => 'uk-form'])!!}
+    {!! Form::open(['route' => ['manager.shop.category.update',$category->id] ,'method'=>'patch','class' => 'uk-form'])!!}
+    <div class="uk-text-left uk-panel uk-panel-box toolbar">
+        <button type="submit" class="uk-button uk-button-success">Обнавить</button>
+    </div>
     <div class="uk-form-row ">
         {!! Form::text('name',$category->name,['class'=>'uk-form-width-large','placeholder'=>'Введите название']) !!}
     </div>
@@ -12,12 +15,11 @@
     </div>
     <div class="uk-form-row">
         <label >Категория</label>
-        {!! Form::select('parent_id',array_merge([''=>'Родительская категория'],$categories),$category->parent_id) !!}
+        {!! Form::select('parent_id',$categories,$category->parent_id) !!}
     </div>
 
-    <div class="uk-form-row">
+
         {!! Form::hidden('id', $category->id) !!}
-        <button type="submit" class="uk-button uk-button-success">Обнавить</button>
-    </div>
+
     {!! Form::close() !!}
 @endsection

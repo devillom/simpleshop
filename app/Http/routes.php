@@ -24,19 +24,32 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 
-Route::group(['middleware' => ['web','admin'],'prefix' => 'manager'], function () {
+Route::group(['middleware' => ['web','auth']], function () {
+    Route::post('api/photo/upload', 'PhotoController@upload')->name('photo.upload');
+    Route::post('api/photo/delete', 'PhotoController@delete')->name('photo.delete');
+});
+
+Route::group(['middleware' => ['web','auth','admin'],'prefix' => 'manager'], function () {
     Route::get('/','Backend\HomeController@index')->name('manager.index');
 
     //User manager
-    Route::resource('users', 'Backend\UserController');
-    Route::post('users/{user}/ban', 'Backend\UserController@ban')->name('manager.users.ban');
-    Route::post('users/{user}/unban', 'Backend\UserController@unban')->name('manager.users.unban');
+    Route::resource('user', 'Backend\UserController',['except' => ['show']]);
+    Route::post('user/{user}/ban', 'Backend\UserController@ban')->name('manager.user.ban');
+    Route::post('user/{user}/unban', 'Backend\UserController@unban')->name('manager.user.unban');
 
-    //Shop Category
 
     Route::group(['prefix' => 'shop'], function () {
-        Route::resource('categories', 'Backend\ShopCategoryController');
+        //Shop Category
+        Route::resource('category', 'Backend\ShopCategoryController',['except' => ['show']]);
+        Route::get('category/reorder', 'Backend\ShopCategoryController@getReorder')->name('manager.shop.category.reorder');
+        Route::post('category/reorder/action', 'Backend\ShopCategoryController@setReorder')->name('manager.shop.category.reorder.action');
+
+        //Shop Product
+        Route::resource('product', 'Backend\ShopProductController',['except' => ['show']]);
+
     });
+
+
 
 
 });

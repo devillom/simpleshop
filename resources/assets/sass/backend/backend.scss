@@ -1,7 +1,76 @@
 body{
-  padding-top: 20px;
+  font-family: 'Roboto Condensed', sans-serif;
 }
-
+h1,h2,h3,h4,h5{
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight:700;
+}
 .main-content{
   padding: 20px 0;
+}
+
+.uk-table{
+  td{
+    vertical-align: middle;
+    font-size:16px;
+  }
+}
+
+.uk-navbar-attached{
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: hsl(210, 100%, 12%);
+  color: #fff;
+  text-shadow: none;
+  .uk-navbar-brand{
+    padding-left:0;
+  }
+  a{
+    color: #fff !important;
+    text-shadow: none !important;
+  }
+
+  .uk-dropdown{
+    a{
+      color: #000 !important;
+      &:hover{
+        background: hsl(210, 100%, 12%);
+        color:#fff !important;
+      }
+    }
+  }
+}
+.toolbar{
+  margin-bottom:20px;
+}
+
+#photos{
+  .uk-thumbnail{
+    overflow: hidden;
+    position: relative;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    .uk-thumbnail-caption{
+      width: 146px;
+      overflow: hidden;
+    }
+      i{
+        cursor: pointer;
+        font-size:22px;
+        color: red;
+        position: absolute;
+        right: 15px;
+        top: 15px;
+      }
+  }
+}
+
+i{
+  &.status{
+    color: red;
+    font-size: 22px;
+    &.active{
+      color: green;
+    }
+  }
 }

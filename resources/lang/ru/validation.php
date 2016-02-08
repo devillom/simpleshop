@@ -124,7 +124,11 @@ return [
         'username' =>  'имя',
         'email'    =>  'email',
         'password' =>  'пароль',
-        'roles' => 'роль'
+        'roles' => 'роль',
+        'price' => 'цена',
+        'name' => 'название',
+        'content' => 'описание',
+        'category_id' => 'категория',
      ],
 
 ];
