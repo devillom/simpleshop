@@ -41,9 +41,11 @@
                         <li><a href="{{route('manager.shop.category.index')}}">Категории</a></li>
                         <li><a href="{{route('manager.shop.product.index')}}">Товары</a></li>
                         <li><a href="{{route('field.index')}}">Дополнительные поля</a></li>
+                        <li><a href="{{route('manager.shop.setting.index')}}">Настройки</a></li>
                     </ul>
                 </div>
             </li>
+
         </ul>
     </div>
 </nav>

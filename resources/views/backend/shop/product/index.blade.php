@@ -19,8 +19,8 @@
         @foreach($products as $product)
             <tr>
                 <td>{{$product->id}}</td>
-                <td>@if(count($product->photos))
-
+                <td>
+                    @if(count($product->photos))
                         <img src="{{ Image::url($product->photos->first()->path,100,100) }}" alt="">
                     @else
                         <img src="uploads/default-image(100x100).png" alt="">

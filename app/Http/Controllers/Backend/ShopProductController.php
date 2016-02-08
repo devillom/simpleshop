@@ -78,6 +78,9 @@ class ShopProductController extends Controller
                     'field_id' => $field->id
                 ]);
             }
+        }else{
+           $product->values()->delete();
+           $product->fields()->detach();
         }
 
         if($request->has('fields')){

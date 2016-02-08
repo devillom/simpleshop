@@ -1,28 +1,8 @@
 <?php
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::group(['middleware' => ['web']], function () {
-    //
-});
-
-//
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
-
-    Route::get('/home', 'HomeController@index');
-
-    Route::get('/role', function(){
-
-        //\Spatie\Permission\Models\Role::create(['name' => 'admin']);
-        //\Spatie\Permission\Models\Role::create(['name' => 'user']);
-        //\Illuminate\Support\Facades\Auth::user()->assignRole('admin');
-
-    });
+    Route::get('/', 'HomeController@index');
 });
-
 
 Route::group(['middleware' => ['web','auth']], function () {
     //Photo
@@ -49,6 +29,8 @@ Route::group(['middleware' => ['web','auth','admin'],'prefix' => 'manager'], fun
         Route::get('category/reorder', 'Backend\ShopCategoryController@getReorder')->name('manager.shop.category.reorder');
         Route::post('category/reorder/action', 'Backend\ShopCategoryController@setReorder')->name('manager.shop.category.reorder.action');
 
+        Route::get('setting', 'Backend\ShopSettingsController@index')->name('manager.shop.setting.index');
+        Route::post('setting', 'Backend\ShopSettingsController@update')->name('manager.shop.setting.update');
         //Shop Product
         Route::resource('product', 'Backend\ShopProductController',['except' => ['show']]);
 
