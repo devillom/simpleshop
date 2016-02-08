@@ -8,8 +8,10 @@ use App\Http\Requests\Backend\ShopCategoryStoreRequest;
 use App\Http\Requests\Backend\ShopCategoryUpdateRequest;
 use App\Http\Requests\Backend\ShopCategoryReorderRequest;
 use App\Models\Shop\Category;
+use App\Models\Shop\Field;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Request;
+
 
 class ShopCategoryController extends Controller
 {
@@ -20,6 +22,7 @@ class ShopCategoryController extends Controller
      */
     public function index()
     {
+
         $categories = Category::orderBy('id', 'desc')->paginate(20);
         return view('backend.shop.category.index', compact('categories'));
     }
@@ -30,8 +33,9 @@ class ShopCategoryController extends Controller
      */
     public function create()
     {
+        $fields = Field::lists('name','id')->toArray();
         $categories = ['' => 'Родительская категория'] + Category::lists('name', 'id')->toArray();
-        return view('backend.shop.category.create', compact('categories'));
+        return view('backend.shop.category.create', compact('categories','fields'));
     }
 
     /**
@@ -42,23 +46,21 @@ class ShopCategoryController extends Controller
      */
     public function store(ShopCategoryStoreRequest $request)
     {
-        $data = $request->all();
+
+        $category = Category::create(
+            [
+                'name' => $request->get('name'),
+                'content' => $request->get('content')
+            ]
+        );
 
         if ($request->has('parent_id')) {
-            $parent = Category::find($data['parent_id']);
-            $parent->children()->create(
-                [
-                    'name' => $data['name'],
-                    'content' => $data['content']
-                ]
-            );
-        } else {
-            Category::create(
-                [
-                    'name' => $data['name'],
-                    'content' => $data['content']
-                ]
-            );
+            $parent = Category::find($request->get('parent_id'));
+            $parent->children()->save($category);
+        }
+
+        if($request->has('fields')){
+            $category->fields()->attach($request->get('fields'));
         }
 
         Session::flash('message', 'Категория создана');
@@ -73,12 +75,12 @@ class ShopCategoryController extends Controller
      */
     public function edit(Category $category)
     {
-
+        $fields = Field::lists('name','id')->toArray();
         $categories = ['' => 'Родительская категория'] + Category::where('id', '!=', $category->id)
                 ->whereNotIn('id', $category->children()->lists('id')->toArray())
                 ->lists('name', 'id')->toArray();
 
-        return view('backend.shop.category.edit', compact('category', 'categories'));
+        return view('backend.shop.category.edit', compact('category', 'categories','fields'));
     }
 
     /**
@@ -101,6 +103,10 @@ class ShopCategoryController extends Controller
         } else {
             $category->parent_id = null;
             $category->save();
+        }
+
+        if($request->has('fields')){
+            $category->fields()->sync($request->get('fields'));
         }
 
         Session::flash('message', 'Категория изменено');

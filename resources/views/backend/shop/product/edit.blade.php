@@ -4,117 +4,63 @@
 @section('content')
     <h1>Редактировать: {{$product->name}}</h1>
 
-    {!! Form::open(['route' => ['manager.shop.product.update',$product->id] ,'method'=>'patch','class' => 'uk-form'])!!}
+    {!! Form::open(['route' => ['manager.shop.product.update',$product->id] ,'method'=>'patch','class' => 'uk-form uk-form-stacked'])!!}
     <div class="uk-text-left uk-panel uk-panel-box toolbar">
         <button type="submit" class="uk-button uk-button-success">Сохранить</button>
     </div>
-
-    <div class="uk-grid">
-        <div class="uk-width-1-2">
-            <div class="uk-form-row ">
-                {!! Form::text('name',$product->name,['class'=>'uk-form-width-large','placeholder'=>'Введите название']) !!}
-            </div>
-            <div class="uk-form-row">
-                {!! Form::hidden('active',0) !!}
-                <label> {!! Form::checkbox('active',1, $product->active) !!} Опубликовать</label>
-            </div>
-            <div class="uk-form-row ">
-                {!! Form::text('price',$product->price,['class'=>'uk-form-width-large','placeholder'=>'Введите цену']) !!}
-            </div>
-            <div class="uk-form-row">
-                {!! Form::textarea('content',$product->content,['class'=>'uk-form-width-large','placeholder'=>'Введите описание']) !!}
-            </div>
-            <div class="uk-form-row">
-                <label>Категория</label>
-                {!! Form::select('category_id',$categories,$product->categories()->lists('id')->toArray()) !!}
-            </div>
-        </div>
-        <div class="uk-width-1-2">
-            <div class="uk-form-row">
-                <div id="upload-drop" class="uk-placeholder">
-                    Загрузить фото <a class="uk-form-file"> <i class="uk-icon-cloud-upload"></i> Выбрать фото<input
-                                id="upload-select" multiple type="file"></a>.
-                </div>
-
-                <div id="progressbar" class="uk-progress uk-hidden">
-                    <div class="uk-progress-bar" style="width: 0%;">...</div>
-                </div>
-            </div>
-            <div id="photos">
-                @foreach($product->photos as $photo)
-                    <div class="uk-thumbnail">
-                        <i class="uk-icon-close" data-filename="{{$photo->disk_name}}"></i>
-                        <img src="{{ Image::url($photo->path,154,154) }}">
-                        <input type="hidden" name="photos[]" value="{{$photo->id}}">
-                        <div class="uk-thumbnail-caption">
-                            {{$photo->file_name}}
-                        </div>
+    <ul class="uk-tab" data-uk-tab="{connect:'#my-tab'}">
+        <li><a href="">Основная информация</a></li>
+        <li><a href="">Дополнительные поля</a></li>
+    </ul>
+    <ul id="my-tab" class="uk-switcher uk-margin">
+        <li>
+            <div class="uk-grid">
+                <div class="uk-width-1-2">
+                    <div class="uk-form-row ">
+                        <label class="uk-form-label">Название</label>
+                        {!! Form::text('name',$product->name,['class'=>'uk-form-width-large','placeholder'=>'Введите название']) !!}
                     </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
+                    <div class="uk-form-row">
+                        <label class="uk-form-label">Категория</label>
+                        {!! Form::select('category_id',$categories,$product->categories()->lists('id')->toArray(),['id'=>'category']) !!}
+                    </div>
+                    <div class="uk-form-row">
+                        {!! Form::hidden('active',0) !!}
+                        <label> {!! Form::checkbox('active',1, $product->active) !!} Опубликовать</label>
+                    </div>
+                    <div class="uk-form-row ">
+                        <label class="uk-form-label">Цена</label>
+                        {!! Form::text('price',$product->price,['class'=>'uk-form-width-large','placeholder'=>'Введите цену']) !!}
+                    </div>
+                    <div class="uk-form-row">
+                        <label class="uk-form-label">Описание</label>
+                        {!! Form::textarea('content',$product->content,['class'=>'uk-form-width-large','placeholder'=>'Введите описание']) !!}
+                    </div>
 
+                </div>
+                <div class="uk-width-1-2">
+                    @include('backend.shop.widgets.photo-upload')
+                </div>
+            </div>
+        </li>
+        <li>
+            <div id="fields">
+                @include('backend.shop.field.types',['fields'=>$product->fields,'productId'=>$product->id])
+            </div>
+        </li>
+    </ul>
 
     {!! Form::close() !!}
 @endsection
 
-
-
 @section('scripts')
     <script>
-        $(function () {
-            var token = $('meta[name=_token]').attr('content');
-            //Delete Image
-            $(document).on('click', '.uk-thumbnail .uk-icon-close', function (e) {
-                e.preventDefault();
-                var button = $(this);
-                $.post('{{route('photo.delete')}}', {
-                    filename: $(this).data('filename'),
-                    _token: token
-                }, function (data, textStatus, xhr) {
-                    button.parents('.uk-thumbnail').remove();
-                });
+        $('#category').on('change', function () {
+            $.get('{{route('category.fields')}}', {
+                category_id: $(this).val(),
+                product_id:{{$product->id}} }, function (data) {
+                $('#fields').html(data);
             });
-
-            var progressbar = $("#progressbar"),
-                    bar = progressbar.find('.uk-progress-bar'),
-                    settings = {
-
-                        action: '{{route('photo.upload')}}', // upload url
-                        allow: '*.(jpg|jpeg|gif|png)', // allow only images
-                        beforeSend: function (xhr) {
-
-                            xhr.setRequestHeader("X-CSRF-Token", token);
-                        },
-                        loadstart: function () {
-                            bar.css("width", "0%").text("0%");
-                            progressbar.removeClass("uk-hidden");
-                        },
-
-                        progress: function (percent) {
-                            percent = Math.ceil(percent);
-                            bar.css("width", percent + "%").text(percent + "%");
-                        },
-
-                        allcomplete: function (response) {
-
-                            bar.css("width", "100%").text("100%");
-
-                            setTimeout(function () {
-                                progressbar.addClass("uk-hidden");
-                            }, 250);
-
-                        },
-                        complete: function (responce) {
-                            var photo = $.parseJSON(responce);
-                            $('#photos').append('<div class="uk-thumbnail"><i class="uk-icon-close" data-filename="' + photo.disk_name + '"></i><img src="uploads/' + photo.disk_name.replace('.', '-image(154x154).') + '"><input type="hidden" name="photos[]" value="' + photo.id + '"><div class="uk-thumbnail-caption">' + photo.file_name + '</div></div>');
-                        }
-                    };
-
-            var select = UIkit.uploadSelect($("#upload-select"), settings),
-                    drop = UIkit.uploadDrop($("#upload-drop"), settings);
         });
-
     </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Shop\Category;
+use App\Models\Shop\FieldValue;
 use App\Models\Shop\Product;
 use App\Photo;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\ShopProductStoreRequest;
 use App\Http\Requests\Backend\ShopProductUpdateRequest;
 use Illuminate\Support\Facades\Session;
-
+use App\Models\Shop\Field;
 class ShopProductController extends Controller
 {
     /**
@@ -60,6 +61,22 @@ class ShopProductController extends Controller
             $product->categories()->sync($request->only('category_id'));
         }
 
+        if($request->has('field')){
+            //@Todo check field before save
+            $product->values()->delete();
+            $product->fields()->sync(array_keys($request->field));
+
+            foreach($request->field as $fieldId => $value){
+                $field = Field::findOrFail($fieldId);
+                FieldValue::create([
+                    $field->type => $value,
+                    'product_id' => $product->id,
+                    'field_id' => $field->id
+                ]);
+            }
+        }
+
+
         Session::flash('message', 'Товар обнавлен');
         return redirect()->route('manager.shop.product.index');
     }
@@ -71,7 +88,7 @@ class ShopProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::lists('name', 'id')->toArray();
+        $categories = [''=>'Выберите категорию']+Category::lists('name', 'id')->toArray();
         return view('backend.shop.product.create', compact('categories'));
     }
 
@@ -92,6 +109,20 @@ class ShopProductController extends Controller
         }
         if ($request->has('category_id')) {
             $product->categories()->attach($request->get('category_id'));
+        }
+
+        if($request->has('field')){
+            //@Todo check field before save
+            $product->fields()->attach(array_keys($request->field));
+
+            foreach($request->field as $fieldId => $value){
+                $field = Field::findOrFail($fieldId);
+                FieldValue::create([
+                    $field->type => $value,
+                    'product_id' => $product->id,
+                    'field_id' => $field->id
+                ]);
+            }
         }
 
         Session::flash('message', 'Товар добавлен');

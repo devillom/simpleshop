@@ -53,3 +53,6 @@ i.status {
   font-size: 22px; }
   i.status.active {
     color: green; }
+
+.toast-message ul {
+  padding-left: 18px; }

@@ -7,6 +7,7 @@ use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use App\Models\Shop\Category;
 use App\Photo;
+use App\Models\Shop\Field;
 class Product extends Model implements SluggableInterface
 {
     use SluggableTrait;
@@ -34,6 +35,16 @@ class Product extends Model implements SluggableInterface
     public function photos()
     {
         return $this->morphMany(Photo::class, 'imageable');
+    }
+
+    public function fields()
+    {
+        return $this->belongsToMany(Field::class, 'shop_product_fields');
+    }
+
+    public function values()
+    {
+        return $this->hasMany(FieldValue::class);
     }
 
 }

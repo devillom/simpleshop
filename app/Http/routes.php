@@ -25,8 +25,13 @@ Route::group(['middleware' => 'web'], function () {
 
 
 Route::group(['middleware' => ['web','auth']], function () {
+    //Photo
     Route::post('api/photo/upload', 'PhotoController@upload')->name('photo.upload');
     Route::post('api/photo/delete', 'PhotoController@delete')->name('photo.delete');
+
+    //Field
+    Route::get('api/category/fields', 'Backend\ShopFieldController@getCategoryFields')->name('category.fields');
+    Route::resource('field','Backend\ShopFieldController');
 });
 
 Route::group(['middleware' => ['web','auth','admin'],'prefix' => 'manager'], function () {
