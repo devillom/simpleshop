@@ -16,6 +16,7 @@
     <link href="{{ asset('bower_components/uikit/css/components/progress.css') }}" rel="stylesheet">
     <link href="{{ asset('bower_components/uikit/css/components/upload.css') }}" rel="stylesheet">
     <link href="{{ asset('bower_components/toastr/toastr.css') }}" rel="stylesheet">
+    <link href="{{ asset('bower_components/chosen/chosen.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('bower_components/animate.css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('css/base.css') }}" rel="stylesheet">
@@ -34,11 +35,12 @@
         <ul class="uk-navbar-nav">
             <li><a href="{{route('manager.index')}}" >Главная</a></li>
             <li><a href="{{route('manager.user.index')}}" >Пользователи</a></li>
-            <li class="uk-parent" data-uk-dropdown><a href="" >Магазин</a>
+            <li class="uk-parent" data-uk-dropdown><a  >Магазин</a>
                 <div class="uk-dropdown uk-dropdown-navbar">
                     <ul class="uk-nav uk-nav-navbar">
                         <li><a href="{{route('manager.shop.category.index')}}">Категории</a></li>
                         <li><a href="{{route('manager.shop.product.index')}}">Товары</a></li>
+                        <li><a href="{{route('field.index')}}">Дополнительные поля</a></li>
                     </ul>
                 </div>
             </li>
@@ -53,6 +55,12 @@
     </div>
 </div>
 
+<div class="footer">
+    <div class="uk-container uk-container-center">
+        <div class="uk-text-center">Simple-Shop v 0.1 - 2016</div>
+    </div>
+</div>
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -61,6 +69,7 @@
 <script src="{{ asset('bower_components/uikit/js/components/nestable.js') }}"></script>
 <script src="{{ asset('bower_components/uikit/js/components/upload.js') }}"></script>
 <script src="{{ asset('bower_components/toastr/toastr.js') }}"></script>
+<script src="{{ asset('bower_components/chosen/chosen.jquery.min.js') }}"></script>
 <script src="{{ asset('bower_components/vue-resource/dist/vue-resource.js') }}"></script>
 <script src="{{ asset('js/backend/app.js') }}"></script>
 @yield('scripts')

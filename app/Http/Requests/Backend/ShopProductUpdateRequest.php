@@ -25,8 +25,14 @@ class ShopProductUpdateRequest extends Request
     {
         return [
             'name'=>'required|max:100',
-            'price'=>'numeric',
-            'category_id' => 'required|exists:shop_categories,id'
+            'price'=>'required|numeric',
+            'category_id' => 'required|exists:shop_categories,id',
+            'photos.*' => 'exists:photos,id',
+            'fields.*' => 'exists:shop_fields,id',
+            'field.*.value_int' => 'numeric',
+            'field.*.value_str' => 'max:255',
+            'field.*.value_dt' => 'date',
+            //'field.*.value_text' => 'max:',
         ];
     }
 }

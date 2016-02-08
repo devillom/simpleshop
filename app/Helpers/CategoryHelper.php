@@ -12,9 +12,9 @@
  */
 function renderSortableNode($node)
 {
-    if ($node->isLeaf()) {
+    if (!$node->hasParent()) {
         return '
-         <li class="uk-nestable-item"  data-id="' . $node->id . '">
+         <li class="uk-nestable-item"  data-id="' . $node->id . '" ">
             <div class="uk-nestable-panel">
             <i class="uk-nestable-handle uk-icon uk-icon-bars uk-margin-small-right"></i>
                ' . $node->name . '

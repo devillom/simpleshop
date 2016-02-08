@@ -35,8 +35,9 @@ class ShopProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $fields = Field::whereNotIn('id',$product->fields->lists('id'))->lists('name','id')->toArray();
         $categories = Category::lists('name', 'id')->toArray();
-        return view('backend.shop.product.edit', compact('categories', 'product'));
+        return view('backend.shop.product.edit', compact('categories', 'product', 'fields'));
     }
 
     /**
@@ -64,21 +65,27 @@ class ShopProductController extends Controller
         if($request->has('field')){
             //@Todo check field before save
             $product->values()->delete();
+
             $product->fields()->sync(array_keys($request->field));
 
             foreach($request->field as $fieldId => $value){
+
+
                 $field = Field::findOrFail($fieldId);
                 FieldValue::create([
-                    $field->type => $value,
+                    $field->type => $value[$field->type],
                     'product_id' => $product->id,
                     'field_id' => $field->id
                 ]);
             }
         }
 
+        if($request->has('fields')){
+            $product->fields()->attach($request->get('fields'));
+        }
 
         Session::flash('message', 'Товар обнавлен');
-        return redirect()->route('manager.shop.product.index');
+        return redirect()->route('manager.shop.product.edit',$product->id);
     }
 
     /**
@@ -88,8 +95,9 @@ class ShopProductController extends Controller
      */
     public function create()
     {
+        $fields = Field::lists('name','id')->toArray();
         $categories = [''=>'Выберите категорию']+Category::lists('name', 'id')->toArray();
-        return view('backend.shop.product.create', compact('categories'));
+        return view('backend.shop.product.create', compact('categories','fields'));
     }
 
     /**
@@ -125,7 +133,11 @@ class ShopProductController extends Controller
             }
         }
 
+        if($request->has('fields')){
+            $product->fields()->attach($request->get('fields'));
+        }
+
         Session::flash('message', 'Товар добавлен');
-        return redirect()->route('manager.shop.product.index');
+        return redirect()->route('manager.shop.product.edit',$product->id);
     }
 }

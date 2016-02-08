@@ -16,7 +16,7 @@
             </div>
 
             <div class="uk-form-row">
-                <label class="uk-form-label">Категория</label>
+                <label  class="uk-form-label" >Категория</label>
                 {!! Form::select('parent_id',$categories,$category->parent_id) !!}
             </div>
             <div class="uk-form-row">
@@ -28,7 +28,7 @@
         <div class="uk-width-1-2">
             <div class="uk-form-row">
                 <label class="uk-form-label">Характеристики</label>
-                {!! Form::select('fields[]',$fields,$category->fields()->lists('id')->toArray(),['multiple'=>'multiple','class'=>'uk-width-1-1']) !!}
+                {!! Form::select('fields[]',$fields,$category->fields()->lists('id')->toArray(),['multiple'=>'multiple','class'=>'uk-width-1-1 chosen-select']) !!}
 
             </div>
             <div class="uk-form-row">

@@ -1,0 +1,39 @@
+.uk-navbar-attached {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: hsl(210, 100%, 12%);
+  color: #fff;
+  text-shadow: none;
+  .uk-navbar-brand {
+    padding-left: 0;
+    text-shadow: none !important;
+    color: #fff;
+  }
+
+  .uk-navbar-nav {
+    > li {
+      > a {
+        color: #fff !important;
+        text-shadow: none !important;
+        &:active {
+          background-color: none;
+        }
+      }
+      &.active{
+        >a{
+          background: #0f7595;
+        }
+      }
+    }
+  }
+
+  .uk-dropdown {
+    a {
+      color: #000 !important;
+      &:hover {
+        background: hsl(210, 100%, 12%);
+        color: #fff !important;
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.14 on 2016-02-07.
+ * Generated for Laravel 5.2.14 on 2016-02-08.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11522,6 +11522,310 @@ namespace {
         public static function offsetUnset($key){
             //Method inherited from \DebugBar\DebugBar            
             return \Barryvdh\Debugbar\LaravelDebugbar::offsetUnset($key);
+        }
+        
+    }
+
+
+    class Image extends \Folklore\Image\Facades\Image{
+        
+        /**
+         * Return an URL to process the image
+         *
+         * @param string $src
+         * @param int $width
+         * @param int $height
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function url($src, $width = null, $height = null, $options = array()){
+            return \Folklore\Image\ImageManager::url($src, $width, $height, $options);
+        }
+        
+        /**
+         * Make an image and apply options
+         *
+         * @param string $path The path of the image
+         * @param array $options The manipulations to apply on the image
+         * @return \Folklore\Image\ImageInterface 
+         * @static 
+         */
+        public static function make($path, $options = array()){
+            return \Folklore\Image\ImageManager::make($path, $options);
+        }
+        
+        /**
+         * Serve an image from an url
+         *
+         * @param string $path
+         * @param array $config
+         * @return \Folklore\Image\Illuminate\Support\Facades\Response 
+         * @static 
+         */
+        public static function serve($path, $config = array()){
+            return \Folklore\Image\ImageManager::serve($path, $config);
+        }
+        
+        /**
+         * Register a custom filter.
+         *
+         * @param string $name The name of the filter
+         * @param \Closure|string $filter
+         * @return void 
+         * @static 
+         */
+        public static function filter($name, $filter){
+            \Folklore\Image\ImageManager::filter($name, $filter);
+        }
+        
+        /**
+         * Create a thumbnail from an image
+         *
+         * @param \Folklore\Image\ImageInterface|string $image An image instance or the path to an image
+         * @param int $width
+         * @return \Folklore\Image\ImageInterface 
+         * @static 
+         */
+        public static function thumbnail($image, $width = null, $height = null, $crop = true){
+            return \Folklore\Image\ImageManager::thumbnail($image, $width, $height, $crop);
+        }
+        
+        /**
+         * Get the format of an image
+         *
+         * @param string $path The path to an image
+         * @return \Folklore\Image\ImageInterface 
+         * @static 
+         */
+        public static function format($path){
+            return \Folklore\Image\ImageManager::format($path);
+        }
+        
+        /**
+         * Delete a file and all manipulated files
+         *
+         * @param string $path The path to an image
+         * @return void 
+         * @static 
+         */
+        public static function delete($path){
+            \Folklore\Image\ImageManager::delete($path);
+        }
+        
+        /**
+         * Delete all manipulated files
+         *
+         * @param string $path The path to an image
+         * @return void 
+         * @static 
+         */
+        public static function deleteManipulated($path){
+            \Folklore\Image\ImageManager::deleteManipulated($path);
+        }
+        
+        /**
+         * Get the URL pattern
+         *
+         * @return string 
+         * @static 
+         */
+        public static function pattern($parameter = null){
+            return \Folklore\Image\ImageManager::pattern($parameter);
+        }
+        
+        /**
+         * Parse the path for the original path of the image and options
+         *
+         * @param string $path A path to parse
+         * @param array $config Configuration options for the parsing
+         * @return array 
+         * @static 
+         */
+        public static function parse($path, $config = array()){
+            return \Folklore\Image\ImageManager::parse($path, $config);
+        }
+        
+        /**
+         * Get the default image driver name.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getDefaultDriver(){
+            return \Folklore\Image\ImageManager::getDefaultDriver();
+        }
+        
+        /**
+         * Set the default image driver name.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */
+        public static function setDefaultDriver($name){
+            \Folklore\Image\ImageManager::setDefaultDriver($name);
+        }
+        
+        /**
+         * Get a driver instance.
+         *
+         * @param string $driver
+         * @return mixed 
+         * @static 
+         */
+        public static function driver($driver = null){
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Folklore\Image\ImageManager::driver($driver);
+        }
+        
+        /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param \Closure $callback
+         * @return $this 
+         * @static 
+         */
+        public static function extend($driver, $callback){
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Folklore\Image\ImageManager::extend($driver, $callback);
+        }
+        
+        /**
+         * Get all of the created "drivers".
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getDrivers(){
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Folklore\Image\ImageManager::getDrivers();
+        }
+        
+    }
+
+
+    class Excel extends \Maatwebsite\Excel\Facades\Excel{
+        
+        /**
+         * Create a new file
+         *
+         * @param $filename
+         * @param callable|null $callback
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
+         * @static 
+         */
+        public static function create($filename, $callback = null){
+            return \Maatwebsite\Excel\Excel::create($filename, $callback);
+        }
+        
+        /**
+         * Load an existing file
+         *
+         * @param string $file The file we want to load
+         * @param callback|null $callback
+         * @param string|null $encoding
+         * @param bool $noBasePath
+         * @return \Maatwebsite\Excel\LaravelExcelReader 
+         * @static 
+         */
+        public static function load($file, $callback = null, $encoding = null, $noBasePath = false){
+            return \Maatwebsite\Excel\Excel::load($file, $callback, $encoding, $noBasePath);
+        }
+        
+        /**
+         * Set select sheets
+         *
+         * @param $sheets
+         * @return \Maatwebsite\Excel\LaravelExcelReader 
+         * @static 
+         */
+        public static function selectSheets($sheets = array()){
+            return \Maatwebsite\Excel\Excel::selectSheets($sheets);
+        }
+        
+        /**
+         * Select sheets by index
+         *
+         * @param array $sheets
+         * @return $this 
+         * @static 
+         */
+        public static function selectSheetsByIndex($sheets = array()){
+            return \Maatwebsite\Excel\Excel::selectSheetsByIndex($sheets);
+        }
+        
+        /**
+         * Batch import
+         *
+         * @param $files
+         * @param callback $callback
+         * @return \Maatwebsite\Excel\PHPExcel 
+         * @static 
+         */
+        public static function batch($files, $callback){
+            return \Maatwebsite\Excel\Excel::batch($files, $callback);
+        }
+        
+        /**
+         * Create a new file and share a view
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
+         * @static 
+         */
+        public static function shareView($view, $data = array(), $mergeData = array()){
+            return \Maatwebsite\Excel\Excel::shareView($view, $data, $mergeData);
+        }
+        
+        /**
+         * Create a new file and load a view
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
+         * @static 
+         */
+        public static function loadView($view, $data = array(), $mergeData = array()){
+            return \Maatwebsite\Excel\Excel::loadView($view, $data, $mergeData);
+        }
+        
+        /**
+         * Set filters
+         *
+         * @param array $filters
+         * @return \Maatwebsite\Excel\Excel 
+         * @static 
+         */
+        public static function registerFilters($filters = array()){
+            return \Maatwebsite\Excel\Excel::registerFilters($filters);
+        }
+        
+        /**
+         * Enable certain filters
+         *
+         * @param string|array $filter
+         * @param bool|false|string $class
+         * @return \Maatwebsite\Excel\Excel 
+         * @static 
+         */
+        public static function filter($filter, $class = false){
+            return \Maatwebsite\Excel\Excel::filter($filter, $class);
+        }
+        
+        /**
+         * Get register, enabled (or both) filters
+         *
+         * @param string|boolean $key [description]
+         * @return array 
+         * @static 
+         */
+        public static function getFilters($key = false){
+            return \Maatwebsite\Excel\Excel::getFilters($key);
         }
         
     }

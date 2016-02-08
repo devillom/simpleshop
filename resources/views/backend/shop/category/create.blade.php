@@ -27,7 +27,7 @@
     <div class="uk-width-1-2">
         <div class="uk-form-row">
            <label class="uk-form-label">Характеристики</label>
-           {!! Form::select('fields[]',$fields,null,['multiple'=>'multiple','class'=>'uk-width-1-1']) !!}
+           {!! Form::select('fields[]',$fields,null,['multiple'=>'multiple','class'=>'uk-width-1-1 chosen-select']) !!}
 
         </div>
         <div class="uk-form-row">

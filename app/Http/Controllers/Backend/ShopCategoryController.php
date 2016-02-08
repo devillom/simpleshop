@@ -33,9 +33,9 @@ class ShopCategoryController extends Controller
      */
     public function create()
     {
-        $fields = Field::lists('name','id')->toArray();
+        $fields = Field::lists('name', 'id')->toArray();
         $categories = ['' => 'Родительская категория'] + Category::lists('name', 'id')->toArray();
-        return view('backend.shop.category.create', compact('categories','fields'));
+        return view('backend.shop.category.create', compact('categories', 'fields'));
     }
 
     /**
@@ -59,7 +59,7 @@ class ShopCategoryController extends Controller
             $parent->children()->save($category);
         }
 
-        if($request->has('fields')){
+        if ($request->has('fields')) {
             $category->fields()->attach($request->get('fields'));
         }
 
@@ -75,12 +75,12 @@ class ShopCategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $fields = Field::lists('name','id')->toArray();
+        $fields = Field::lists('name', 'id')->toArray();
         $categories = ['' => 'Родительская категория'] + Category::where('id', '!=', $category->id)
                 ->whereNotIn('id', $category->children()->lists('id')->toArray())
                 ->lists('name', 'id')->toArray();
 
-        return view('backend.shop.category.edit', compact('category', 'categories','fields'));
+        return view('backend.shop.category.edit', compact('category', 'categories', 'fields'));
     }
 
     /**
@@ -105,7 +105,7 @@ class ShopCategoryController extends Controller
             $category->save();
         }
 
-        if($request->has('fields')){
+        if ($request->has('fields')) {
             $category->fields()->sync($request->get('fields'));
         }
 
@@ -134,7 +134,10 @@ class ShopCategoryController extends Controller
      */
     public function getReorder()
     {
-        $tree = Category::all()->toHierarchy();
+
+        $results = Category::get();
+
+        $tree = $results->toTree();
         return view('backend.shop.category.reorder', compact('tree'));
     }
 
@@ -149,9 +152,10 @@ class ShopCategoryController extends Controller
         //@TODO Reorder need fix
         $categories = json_decode($request->get('data'), true);
 
-        Category::buildTree($categories);
-        Category::rebuild(true);
-
+        Category::updateTreeRoots($categories);
+        Category::rebuildTree($categories);
+        Category::fixTree();
+        // Category::update($categories);
         return response()->json(['status' => 'ok']);
     }
 }

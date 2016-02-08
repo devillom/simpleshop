@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Shop\Category;
 class ShopFieldController extends Controller
 {
+
+    public function index()
+    {
+        $fields = Field::all();
+        return view('backend.shop.field.index', compact('fields'));
+    }
     public function store(ShopFieldStoreRequest $request)
     {
         $field = Field::create(
@@ -36,6 +42,31 @@ class ShopFieldController extends Controller
             $view =  view('backend.shop.field.types', compact('fields','productId'));
             return $view->render();
         }
+    }
+
+    public function edit(Field $field)
+    {
+       return view('backend.shop.field.edit-form', compact('field'));
+    }
+
+
+    public function update(Request $request, Field $field)
+    {
+        if(!is_null($field)){
+            $field->update(
+                $request->only(['name','content','type'])
+            );
+        }
+        return response()->json(['status'=>'ok','field'=>$field->toArray()]);
+    }
+
+    public function destroy(Field $field)
+    {
+        if(!is_null($field)){
+            $field->delete();
+            Session::flash('message','Поле удалена');
+        }
+        return redirect()->route('field.index');
     }
 
 

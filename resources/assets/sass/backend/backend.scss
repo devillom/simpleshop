@@ -1,3 +1,4 @@
+@import "menu";
 body{
   font-family: 'Roboto Condensed', sans-serif;
 }
@@ -7,6 +8,18 @@ h1,h2,h3,h4,h5{
 }
 .main-content{
   padding: 20px 0;
+  min-height: 700px;
+}
+
+.footer{
+
+  padding-top:40px;
+
+  color:#000;
+  .uk-text-center{
+    padding-top: 30px;
+    border-top: 2px solid #999;
+  }
 }
 
 .uk-table{
@@ -16,30 +29,7 @@ h1,h2,h3,h4,h5{
   }
 }
 
-.uk-navbar-attached{
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: hsl(210, 100%, 12%);
-  color: #fff;
-  text-shadow: none;
-  .uk-navbar-brand{
-    padding-left:0;
-  }
-  a{
-    color: #fff !important;
-    text-shadow: none !important;
-  }
 
-  .uk-dropdown{
-    a{
-      color: #000 !important;
-      &:hover{
-        background: hsl(210, 100%, 12%);
-        color:#fff !important;
-      }
-    }
-  }
-}
 .toolbar{
   margin-bottom:20px;
 }
@@ -78,6 +68,13 @@ i{
 .toast-message{
   ul{
     padding-left: 18px;
+  }
+}
+
+.chosen-container-multi {
+  .chosen-choices{
+    border: 1px solid #DDD;
+    border-radius: 4px;
   }
 }
 //.uk-from{

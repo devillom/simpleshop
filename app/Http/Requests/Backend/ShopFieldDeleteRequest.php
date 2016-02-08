@@ -4,7 +4,7 @@ namespace App\Http\Requests\Backend;
 
 use App\Http\Requests\Request;
 
-class ShopProductStoreRequest extends Request
+class ShopFieldDeleteRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,7 @@ class ShopProductStoreRequest extends Request
     public function rules()
     {
         return [
-            'name'=>'required|max:100',
-            'price'=>'required|numeric',
-            'category_id' => 'required|exists:shop_categories,id',
-            'photos.*' => 'exists:photos,id',
-            'fields.*' => 'exists:shop_fields,id',
-            'field.*.value_int' => 'numeric',
-            'field.*.value_str' => 'max:255',
-            'field.*.value_dt' => 'date',
+            //@Todo need something
         ];
     }
 }

@@ -1,2 +1,1 @@
-var p = 'sd';
-var s = 2;
+$(".chosen-select").chosen({width: "50%"});

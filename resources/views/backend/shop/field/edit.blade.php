@@ -1,57 +1,48 @@
-<div id="addFieldModal" class="uk-modal">
-    <div class="uk-modal-dialog">
-        <a class="uk-modal-close uk-close"></a>
-        <div class="uk-modal-header">Добавить новое поле</div>
-        {!! Form::open(['route' => ['field.store'] ,'method'=>'post','class' => 'uk-form uk-form-stacked'])!!}
-            <div class="uk-form-row">
-                <label class="uk-form-label">Название</label>
-                {!! Form::text('name',null,['class'=>'uk-width-1-1']) !!}
-            </div>
-            <div class="uk-form-row">
-                <label class="uk-form-label">Тип ввода</label>
-                 {!! Form::select('type',[
-                     'value_str' => 'Строка',
-                     'value_int' => 'Число',
-                     'value_text' => 'Текст',
-                     'value_dt' => 'Выбор даты',
-                 ],null,['class'=>'uk-width-1-1'])  !!}
-            </div>
-            <div class="uk-form-row">
-                <label class="uk-form-label">Описание</label>
-                {!! Form::textarea('content',null,['class'=>'uk-width-1-1']) !!}
-            </div>
-        <div class="uk-modal-footer">
-            <button class="uk-button uk-button-primary">Сохранить</button>
-        </div>
-        {!! Form::close() !!}
-    </div>
+<div id="editFieldModal" class="uk-modal">
+
 </div>
 
 @section('scripts')
+    @parent
     <script>
-        var modal = new UIkit.modal("#addFieldModal");
+        $('.edit-field').on('click', function () {
+            $.get($(this).data('edit'), null, function (data) {
+                $('#editFieldModal').html(data);
+            });
 
-        $('#addFieldModal form').on('submit',function(event){
+        });
+
+        var editModal = new UIkit.modal("#editFieldModal");
+
+        $(document).on('submit', '#editFieldModal form', function (event) {
             event.preventDefault();
-            $.post('{{route('field.store')}}', $(this).serialize(),function(data) {
+            $.post($(this).attr('action'), $(this).serialize(), function (data) {
 
-                if(data.status == 'ok') {
-                    toastr.success('Характеристика добавлена','Сообщение системы');
-                    $('select[name="fields[]"]').append('<option value="'+data.field.id+'">'+data.field.name+'</option>');
-                    modal.hide();
+                if (data.status == 'ok') {
+                    toastr.success('Характеристика изменена', 'Сообщение системы');
+                    if ($('select[name="fields[]"]').length > 0) {
+                        $('select[name="fields[]"]').append('<option value="' + data.field.id + '">' + data.field.name + '</option>');
+                    }
+                    if ($('[data-id="' + data.field.id + '"]').length > 0) {
+                        $('[data-id="' + data.field.id + '"]').find('.name').text(data.field.name);
+                    }
+
+                    editModal.hide();
                 }
-            }).fail(function(data){
+            }).fail(function (data) {
                 var errors = data.responseJSON;
 
                 var errorsHtml = '<ul>';
 
-                $.each( errors, function( key, value ) {
+                $.each(errors, function (key, value) {
                     errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
                 });
                 errorsHtml += '</ul>';
 
-                toastr.error(errorsHtml,'Сообщение системы');
+                toastr.error(errorsHtml, 'Сообщение системы');
             })
         })
+
+
     </script>
 @endsection

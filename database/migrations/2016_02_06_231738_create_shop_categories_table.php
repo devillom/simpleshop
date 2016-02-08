@@ -16,10 +16,10 @@ class CreateShopCategoriesTable extends Migration {
       $table->string('slug')->unique();
       $table->text('content');
       $table->increments('id');
-      $table->integer('parent_id')->nullable()->index();
-      $table->integer('lft')->nullable()->index();
-      $table->integer('rgt')->nullable()->index();
-      $table->integer('depth')->nullable();
+      $table->unsignedInteger('_lft');
+      $table->unsignedInteger('_rgt');
+      $table->unsignedInteger('parent_id')->nullable();
+      $table->index([ '_lft', '_rgt', 'parent_id' ]);
       $table->timestamps();
     });
   }

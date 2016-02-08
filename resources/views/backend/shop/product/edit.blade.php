@@ -44,16 +44,31 @@
             </div>
         </li>
         <li>
-            <div id="fields">
+            <div class="uk-form-row" id="fields">
                 @include('backend.shop.field.types',['fields'=>$product->fields,'productId'=>$product->id])
             </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">Выбрать поле</label>
+                @if(isset($fields))
+                    {!! Form::select('fields[]', $fields, null, ['multiple'=>'multiple','class'=>'chosen-select'] ) !!}
+                @endif
+            </div>
+
+            <div class="uk-form-row">
+                <button type="button" class="uk-button uk-button-primary" data-uk-modal="{target:'#addFieldModal'}">
+                    Добавить новое поле
+                </button>
+            </div>
+
         </li>
     </ul>
 
     {!! Form::close() !!}
+    @include('backend.shop.field.create')
 @endsection
 
 @section('scripts')
+    @parent
     <script>
         $('#category').on('change', function () {
             $.get('{{route('category.fields')}}', {
