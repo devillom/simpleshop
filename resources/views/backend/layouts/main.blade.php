@@ -1,79 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="_token" content="{{csrf_token()}}">
-    <base href="{{url('/')}}" />
-    <title>@yield('title')</title>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <base href="{{url('/')}}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <title></title>
+        {!! Minify::stylesheet([
+            '/bower_components/semantic/dist/semantic.css',
+            '/css/backend.css'
+        ]) !!}
+    </head>
+    <body>
+        @include('backend.layouts.menu')
 
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,400italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-    <link href="{{ asset('bower_components/uikit/css/uikit.gradient.css') }}" rel="stylesheet">
-    <link href="{{ asset('bower_components/uikit/css/components/nestable.gradient.css') }}" rel="stylesheet">
-    <link href="{{ asset('bower_components/uikit/css/components/form-file.css') }}" rel="stylesheet">
-    <link href="{{ asset('bower_components/uikit/css/components/placeholder.css') }}" rel="stylesheet">
-    <link href="{{ asset('bower_components/uikit/css/components/progress.css') }}" rel="stylesheet">
-    <link href="{{ asset('bower_components/uikit/css/components/upload.css') }}" rel="stylesheet">
-    <link href="{{ asset('bower_components/toastr/toastr.css') }}" rel="stylesheet">
-    <link href="{{ asset('bower_components/chosen/chosen.min.css') }}" rel="stylesheet">
+        <div class="ui container">
+            @yield('content')
+        </div>
 
-    <link href="{{ asset('bower_components/animate.css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/base.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/backend.css') }}" rel="stylesheet">
-
-
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body>
-<nav class="tm-navbar uk-navbar uk-navbar-attached">
-    <div class="uk-container uk-container-center">
-        <a href="" class="uk-navbar-brand">Simple-Shop v 0.1</a>
-        <ul class="uk-navbar-nav">
-            <li><a href="{{route('manager.index')}}" >Главная</a></li>
-            <li><a href="{{route('manager.user.index')}}" >Пользователи</a></li>
-            <li class="uk-parent" data-uk-dropdown><a  >Магазин</a>
-                <div class="uk-dropdown uk-dropdown-navbar">
-                    <ul class="uk-nav uk-nav-navbar">
-                        <li><a href="{{route('manager.shop.category.index')}}">Категории</a></li>
-                        <li><a href="{{route('manager.shop.product.index')}}">Товары</a></li>
-                        <li><a href="{{route('field.index')}}">Дополнительные поля</a></li>
-                        <li><a href="{{route('manager.shop.setting.index')}}">Настройки</a></li>
-                    </ul>
-                </div>
-            </li>
-
-        </ul>
-    </div>
-</nav>
-
-<div class="uk-container uk-container-center">
-    <div class="main-content">
-        @include('backend.messages')
-        @yield('content')
-    </div>
-</div>
-
-<div class="footer">
-    <div class="uk-container uk-container-center">
-        <div class="uk-text-center">Simple-Shop v 0.1 - 2016</div>
-    </div>
-</div>
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="{{ asset('bower_components/vue/dist/vue.js') }}"></script>
-<script src="{{ asset('bower_components/uikit/js/uikit.js') }}"></script>
-<script src="{{ asset('bower_components/uikit/js/components/nestable.js') }}"></script>
-<script src="{{ asset('bower_components/uikit/js/components/upload.js') }}"></script>
-<script src="{{ asset('bower_components/toastr/toastr.js') }}"></script>
-<script src="{{ asset('bower_components/chosen/chosen.jquery.min.js') }}"></script>
-<script src="{{ asset('bower_components/vue-resource/dist/vue-resource.js') }}"></script>
-<script src="{{ asset('js/backend/app.js') }}"></script>
-@yield('scripts')
-</body>
+        {!! Minify::javascript([
+            '/bower_components/jquery/dist/jquery.js',
+            '/bower_components/semantic/dist/semantic.js',
+            '/bower_components/vue/dist/vue.min.js',
+            '/bower_components/vue-resource/dist/vue-resource.js',
+            '/js/backend/app.js',
+        ]) !!}
+    </body>
 </html>

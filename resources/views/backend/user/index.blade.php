@@ -1,61 +1,65 @@
 @extends('backend.layouts.main')
 
 @section('content')
-    <h1>Пользователи</h1>
+    <h2 class="ui center aligned icon header">
+        <i class="circular users icon"></i>
+        Пользователи
+    </h2>
 
-    <div class="uk-text-left uk-panel uk-panel-box toolbar">
-        <a class="uk-button uk-button-success" href="{{route('manager.user.create')}}">Создать</a>
+    <a href="{{route('manager.user.create')}}" class="ui basic button">
+        <i class="icon user add"></i>
+        Добавить
+    </a>
+    <button type="submit" class="ui red button">
+        <i class="icon user remove"></i>
+        Удалить
+    </button>
+
+    <div id="users">
+            <div :class="{'loading': loading}" class="ui segment">
+            <table  class="ui celled table" v-if="users.length">
+                <thead>
+                <tr>
+                    <th>
+                        <div class="ui checkbox">
+                            <input type="checkbox" class="selectAll">
+                            <label ></label>
+                        </div>
+                    </th>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Роли</th>
+                    <th>Дата регистрации</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                    <tr v-for="user in users">
+                        <td>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="user_id[]" value="@{{user.id}}" class="selectAll">
+                                <label ></label>
+                            </div>
+                        </td>
+                        <td>@{{user.id}}</td>
+                        <td>@{{user.name}}</td>
+                        <td>@{{user.email}}</td>
+                        <td>
+                            <span class="ui teal label" v-for="role in user.roles">
+                                @{{role.name}}
+                            </span>
+                        </td>
+                        <td>@{{user.created_at}}</td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    {{--{{$users}}--}}
-    <table class="uk-table uk-table-hover uk-table-striped">
-      <thead>
-          <tr>
-              <th>ID</th>
-              <th>Имя</th>
-              <th>Email</th>
-              <th>Роли</th>
-              <th>Дата регистрации</th>
-              <th class="uk-text-right">Действие</th>
-              <th class="uk-text-right">Заблокировать</th>
 
-          </tr>
-      </thead>
-        <tbody>
-        @foreach( $users as $user )
-            <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->name}}</td>
-                <td>{{$user->email}}</td>
-                <td>
-                    @foreach($user->roles as $role)
-                        <span class="uk-badge uk-badge-success">{{$role->name}}</span>
-                    @endforeach
-                </td>
-                <td>{{$user->created_at}}</td>
-                <td class="uk-text-right">
 
-                    {!! Form::open(['route' => ['manager.user.destroy',$user->id] ,'method'=>'delete'])!!}
-                    <a href="{{ route('manager.user.edit', ['user' => $user->id])}}" class="uk-button uk-button-primary">
-                        <i class="uk-icon uk-icon-edit"></i> </a>
-                    <button type="submit" class="uk-button uk-button-danger"><i class="uk-icon uk-icon-trash"></i> </button>
-                    {!! Form::close() !!}
-
-                </td>
-                <td class="uk-text-right">
-                    @if (!$user->is_banned)
-                        {!! Form::open(['route' => ['manager.user.ban',$user->id] ,'method'=>'post'])!!}
-                        <button type="submit" class="uk-button uk-button-danger"><i class="uk-icon uk-icon-ban"></i> Забанить</button>
-                        {!! Form::close() !!}
-                    @else
-                        {!! Form::open(['route' => ['manager.user.unban',$user->id] ,'method'=>'post'])!!}
-                        <button type="submit" class="uk-button uk-button-primary"><i class="uk-icon uk-icon-ban"></i> Разбанить</button>
-                        {!! Form::close() !!}
-                    @endif
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
 
 @endsection

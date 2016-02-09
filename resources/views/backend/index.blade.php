@@ -1,7 +1,5 @@
 @extends('backend.layouts.main')
 
-
 @section('content')
-    <h1>Главная</h1>
-    <p>Добро пожаловать Админ!</p>
+    <h1>Добро пожаловать</h1>
 @endsection

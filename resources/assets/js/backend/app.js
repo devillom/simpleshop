@@ -1,1 +1,1 @@
-$(".chosen-select").chosen({width: "50%"});
+//$(".chosen-select").chosen({width: "50%"});
