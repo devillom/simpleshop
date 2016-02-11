@@ -7,6 +7,7 @@
     {!! Form::open(['route' => ['manager.shop.product.update',$product->id] ,'method'=>'patch','class' => 'uk-form uk-form-stacked'])!!}
     <div class="uk-text-left uk-panel uk-panel-box toolbar">
         <button type="submit" class="uk-button uk-button-success">Сохранить</button>
+        <a href="{{route('manager.shop.product.index')}}" class="uk-button uk-button-danger">Закрыть</a>
     </div>
     <ul class="uk-tab" data-uk-tab="{connect:'#my-tab'}">
         <li><a href="">Основная информация</a></li>
@@ -39,7 +40,7 @@
 
                 </div>
                 <div class="uk-width-1-2">
-                    @include('backend.shop.widgets.photo-upload')
+                    @include('backend.shop.widgets.photo-upload',['photos'=>$product->photos])
                 </div>
             </div>
         </li>
@@ -54,17 +55,13 @@
                 @endif
             </div>
 
-            <div class="uk-form-row">
-                <button type="button" class="uk-button uk-button-primary" data-uk-modal="{target:'#addFieldModal'}">
-                    Добавить новое поле
-                </button>
-            </div>
+
 
         </li>
     </ul>
 
     {!! Form::close() !!}
-    @include('backend.shop.field.create')
+
 @endsection
 
 @section('scripts')

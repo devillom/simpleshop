@@ -24,8 +24,9 @@ class ShopFieldStoreRequest extends Request
     public function rules()
     {
         return [
-            'name'=>'required|unique:shop_fields,name',
-            'type'=>'in:value_str,value_int,value_text,value_dt',
+            'name'=>'required',
+            'type'=>'in:value_str,value_int,value_text,value_dt,value_select',
+            'category_id' => 'required|exists:shop_categories,id'
         ];
     }
 }

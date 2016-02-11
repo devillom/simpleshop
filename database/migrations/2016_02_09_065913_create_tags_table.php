@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateShopFieldsTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,10 @@ class CreateShopFieldsTable extends Migration
      */
     public function up()
     {
-        Schema::create('shop_fields', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
+        Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',100);
-            $table->text('content')->nullable();
-            $table->integer('category_id')->index();
-            $table->string('type');
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +26,6 @@ class CreateShopFieldsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('shop_fields');
+        Schema::drop('tags');
     }
 }

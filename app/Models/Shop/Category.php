@@ -5,7 +5,7 @@ namespace App\Models\Shop;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use Kalnoy\Nestedset\Node;
-
+use App\Photo;
 class Category extends Node implements SluggableInterface
 {
     use SluggableTrait;
@@ -30,7 +30,12 @@ class Category extends Node implements SluggableInterface
 
     public function fields()
     {
-        return $this->belongsToMany(Field::class, 'shop_category_fields');
+        return $this->hasmany(Field::class);
+    }
+
+    public function photos()
+    {
+        return $this->morphMany(Photo::class, 'imageable');
     }
 
 

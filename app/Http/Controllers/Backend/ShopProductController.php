@@ -14,6 +14,7 @@ use App\Http\Requests\Backend\ShopProductStoreRequest;
 use App\Http\Requests\Backend\ShopProductUpdateRequest;
 use Illuminate\Support\Facades\Session;
 use App\Models\Shop\Field;
+
 class ShopProductController extends Controller
 {
     /**
@@ -35,7 +36,7 @@ class ShopProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $fields = Field::whereNotIn('id',$product->fields->lists('id'))->lists('name','id')->toArray();
+        $fields = Field::whereNotIn('id', $product->fields->lists('id'))->lists('name', 'id')->toArray();
         $categories = Category::lists('name', 'id')->toArray();
         return view('backend.shop.product.edit', compact('categories', 'product', 'fields'));
     }
@@ -53,8 +54,8 @@ class ShopProductController extends Controller
             $request->only('name', 'content', 'price', 'active')
         );
 
-        if($request->has('photos')){
-            $photos = Photo::whereIn('id',$request->get('photos'))->get();
+        if ($request->has('photos')) {
+            $photos = Photo::whereIn('id', $request->get('photos'))->get();
             $product->photos()->saveMany($photos);
         }
 
@@ -62,13 +63,14 @@ class ShopProductController extends Controller
             $product->categories()->sync($request->only('category_id'));
         }
 
-        if($request->has('field')){
+
+        if ($request->has('field')) {
             //@Todo check field before save
             $product->values()->delete();
 
             $product->fields()->sync(array_keys($request->field));
 
-            foreach($request->field as $fieldId => $value){
+            foreach ($request->field as $fieldId => $value) {
 
 
                 $field = Field::findOrFail($fieldId);
@@ -78,17 +80,17 @@ class ShopProductController extends Controller
                     'field_id' => $field->id
                 ]);
             }
-        }else{
-           $product->values()->delete();
-           $product->fields()->detach();
+        } else {
+            $product->values()->delete();
+            $product->fields()->detach();
         }
 
-        if($request->has('fields')){
+        if ($request->has('fields')) {
             $product->fields()->attach($request->get('fields'));
         }
 
         Session::flash('message', 'Товар обнавлен');
-        return redirect()->route('manager.shop.product.edit',$product->id);
+        return redirect()->route('manager.shop.product.edit', $product->id);
     }
 
     /**
@@ -98,9 +100,9 @@ class ShopProductController extends Controller
      */
     public function create()
     {
-        $fields = Field::lists('name','id')->toArray();
-        $categories = [''=>'Выберите категорию']+Category::lists('name', 'id')->toArray();
-        return view('backend.shop.product.create', compact('categories','fields'));
+        $fields = Field::lists('name', 'id')->toArray();
+        $categories = ['' => 'Выберите категорию'] + Category::lists('name', 'id')->toArray();
+        return view('backend.shop.product.create', compact('categories', 'fields'));
     }
 
     /**
@@ -114,33 +116,52 @@ class ShopProductController extends Controller
 
         $product = Product::create($request->only('name', 'content', 'price', 'active'));
 
-        if($request->has('photos')){
-            $photos = Photo::whereIn('id',$request->get('photos'))->get();
+        if ($request->has('photos')) {
+            $photos = Photo::whereIn('id', $request->get('photos'))->get();
             $product->photos()->saveMany($photos);
         }
         if ($request->has('category_id')) {
             $product->categories()->attach($request->get('category_id'));
-        }
-
-        if($request->has('field')){
+        };
             //@Todo check field before save
             $product->fields()->attach(array_keys($request->field));
 
-            foreach($request->field as $fieldId => $value){
-                $field = Field::findOrFail($fieldId);
-                FieldValue::create([
-                    $field->type => $value,
-                    'product_id' => $product->id,
-                    'field_id' => $field->id
-                ]);
-            }
-        }
 
-        if($request->has('fields')){
+            foreach ($request->get('field') as $fieldId => $value) {
+                if(!empty($value))
+                {
+                    $field = Field::findOrFail($fieldId);
+                    FieldValue::create([
+                        $field->type => $value[$field->type],
+                        'product_id' => $product->id,
+                        'field_id' => $field->id
+                    ]);
+                }
+            }
+
+
+        if ($request->has('fields')) {
             $product->fields()->attach($request->get('fields'));
         }
 
         Session::flash('message', 'Товар добавлен');
-        return redirect()->route('manager.shop.product.edit',$product->id);
+        return redirect()->route('manager.shop.product.edit', $product->id);
+    }
+
+
+    /**
+     * Delete product
+     *
+     * @param Product $product
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy(Product $product)
+    {
+        if (!is_null($product)) {
+            $product->delete();
+            Session::flash('message', 'Товар удален');
+        }
+        return redirect()->route('manager.shop.product.index');
     }
 }

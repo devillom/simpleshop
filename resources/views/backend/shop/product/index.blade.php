@@ -21,9 +21,9 @@
                 <td>{{$product->id}}</td>
                 <td>
                     @if(count($product->photos))
-                        <img src="{{ Image::url($product->photos->first()->path,100,100) }}" alt="">
+                        <img class="uk-thumbnail" src="{{ Image::url($product->photos->first()->path,100,100) }}" alt="">
                     @else
-                        <img src="uploads/default-image(100x100).png" alt="">
+                        <img class="uk-thumbnail" src="uploads/default-image(100x100).png" alt="">
                     @endif
                 </td>
 

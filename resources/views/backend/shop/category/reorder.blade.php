@@ -5,6 +5,7 @@
 
 <div class="uk-text-left uk-panel uk-panel-box toolbar">
     <a href="{{route('manager.shop.category.create')}}" class="uk-button uk-button-success">Создать</a>
+    <a href="{{route('manager.shop.category.index')}}" class="uk-button uk-button-danger">Закрыть</a>
 </div>
 
 <!-- This is the nav containing the toggling elements -->

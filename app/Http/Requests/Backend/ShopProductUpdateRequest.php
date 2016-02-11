@@ -33,6 +33,7 @@ class ShopProductUpdateRequest extends Request
             'field.*.value_str' => 'max:255',
             'field.*.value_dt' => 'date',
             //'field.*.value_text' => 'max:',
+            'field.*.value_select' => 'exists:shop_field_options,id',
         ];
     }
 }

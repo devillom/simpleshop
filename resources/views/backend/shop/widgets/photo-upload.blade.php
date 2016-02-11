@@ -9,8 +9,8 @@
     </div>
 </div>
 <div id="photos">
-    @if(isset($product))
-        @foreach($product->photos as $photo)
+    @if(isset($photos) && count($photos))
+        @foreach($photos as $photo)
             <div class="uk-thumbnail">
                 <i class="uk-icon-close" data-filename="{{$photo->disk_name}}"></i>
                 <img src="{{ Image::url($photo->path,154,154) }}">

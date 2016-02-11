@@ -29,7 +29,7 @@
                 <td>{{$category->parent['name']}}</td>
                 <td class="uk-text-right">
 
-                    {!! Form::open(['route' => ['manager.shop.category.destroy',$category->id] ,'method'=>'delete'])!!}
+                    {!! Form::open(['route' => ['manager.shop.category.destroy',$category->id] ,'method'=>'delete','class'=>'confirm'])!!}
                     <a href="{{ route('manager.shop.category.edit', ['category' => $category->id])}}"
                        class="uk-button uk-button-primary">
                         <i class="uk-icon uk-icon-edit"></i> </a>

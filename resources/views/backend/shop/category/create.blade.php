@@ -6,6 +6,7 @@
     {!! Form::open(['route' => ['manager.shop.category.store'] ,'method'=>'post','class' => 'uk-form uk-form-stacked', 'ajax-request'=>'1'])!!}
     <div class="uk-text-left uk-panel uk-panel-box toolbar">
         <button type="submit" class="uk-button uk-button-success">Добавить</button>
+        <a href="{{route('manager.shop.category.index')}}" class="uk-button uk-button-danger">Закрыть</a>
     </div>
 <div class="uk-grid">
     <div class="uk-width-1-2">
@@ -26,13 +27,9 @@
     </div>
     <div class="uk-width-1-2">
         <div class="uk-form-row">
-           <label class="uk-form-label">Характеристики</label>
-           {!! Form::select('fields[]',$fields,null,['multiple'=>'multiple','class'=>'uk-width-1-1 chosen-select']) !!}
+                @include('backend.shop.widgets.photo-upload')
+        </div>
 
-        </div>
-        <div class="uk-form-row">
-            <button type="button" class="uk-button uk-button-primary" data-uk-modal="{target:'#addFieldModal'}">Добавить новое поле</button>
-        </div>
     </div>
 </div>
 
@@ -40,5 +37,5 @@
 
     {!! Form::close() !!}
 
-    @include('backend.shop.field.create')
+
 @endsection

@@ -11,6 +11,11 @@ Route::group(['middleware' => ['web','auth']], function () {
 
     //Field
     Route::get('api/category/fields', 'Backend\ShopFieldController@getCategoryFields')->name('category.fields');
+
+    Route::get('api/category/fields/options/{field}', 'Backend\ShopFieldController@getOptionsForm')->name('category.field.option.form');
+    Route::post('api/category/fields/options/{option}/destroy', 'Backend\ShopFieldController@destroyOption')->name('category.field.option.destroy');
+    Route::post('api/category/fields/options', 'Backend\ShopFieldController@storeOrUpdateOptions')->name('category.field.option.store');
+
     Route::resource('field','Backend\ShopFieldController');
 });
 

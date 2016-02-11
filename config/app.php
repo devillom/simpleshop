@@ -165,7 +165,8 @@ return [
         App\Providers\HelperServiceProvider::class,
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
         Folklore\Image\ImageServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
 
     ],
 
@@ -218,7 +219,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Image' => Folklore\Image\Facades\Image::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
 
     ],
 

@@ -13,6 +13,7 @@ class FieldValue extends Model
       'value_int',
       'value_dt',
       'value_text',
+      'value_select',
       'field_id',
       'product_id'
     ];

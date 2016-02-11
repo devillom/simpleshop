@@ -12,7 +12,8 @@ class Field extends Model
     protected $fillable = [
         'name',
         'content',
-        'type'
+        'type',
+        'category_id'
     ];
 
     public function products()
@@ -20,14 +21,20 @@ class Field extends Model
         return $this->belongsToMany(Product::class,'shop_product_fields');
     }
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(Category::class,'shop_category_fields');
+        return $this->belongsTo(Category::class);
     }
 
     public function values()
     {
         return $this->hasMany(FieldValue::class);
+    }
+
+
+    public function options()
+    {
+        return $this->hasMany(FieldOption::class);
     }
 
     public function getValue($product_id)

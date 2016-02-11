@@ -33,15 +33,27 @@
     <div class="uk-container uk-container-center">
         <a href="" class="uk-navbar-brand">Simple-Shop v 0.1</a>
         <ul class="uk-navbar-nav">
-            <li><a href="{{route('manager.index')}}" >Главная</a></li>
-            <li><a href="{{route('manager.user.index')}}" >Пользователи</a></li>
+            <li @if(Route::getCurrentRoute()->getName()=='manager.index') class="active" @endif>
+                <a href="{{route('manager.index')}}" >Главная</a>
+            </li>
+            <li @if(Route::getCurrentRoute()->getName()=='manager.user.index') class="active" @endif>
+                <a href="{{route('manager.user.index')}}" >Пользователи</a>
+            </li>
             <li class="uk-parent" data-uk-dropdown><a  >Магазин</a>
                 <div class="uk-dropdown uk-dropdown-navbar">
                     <ul class="uk-nav uk-nav-navbar">
-                        <li><a href="{{route('manager.shop.category.index')}}">Категории</a></li>
-                        <li><a href="{{route('manager.shop.product.index')}}">Товары</a></li>
-                        <li><a href="{{route('field.index')}}">Дополнительные поля</a></li>
-                        <li><a href="{{route('manager.shop.setting.index')}}">Настройки</a></li>
+                        <li @if(Route::getCurrentRoute()->getName()=='manager.shop.category.index') class="active" @endif>
+                            <a href="{{route('manager.shop.category.index')}}">Категории</a>
+                        </li>
+                        <li @if(Route::getCurrentRoute()->getName()=='manager.shop.product.index') class="active" @endif>
+                            <a href="{{route('manager.shop.product.index')}}">Товары</a>
+                        </li>
+                        <li @if(Route::getCurrentRoute()->getName()=='field.index') class="active" @endif>
+                            <a href="{{route('field.index')}}">Дополнительные поля</a>
+                        </li>
+                        <li @if(Route::getCurrentRoute()->getName()=='manager.shop.setting.index') class="active" @endif>
+                            <a href="{{route('manager.shop.setting.index')}}">Настройки</a>
+                        </li>
                     </ul>
                 </div>
             </li>
@@ -49,9 +61,15 @@
         </ul>
     </div>
 </nav>
-
+<div class="breadcrumbs-wrapper">
+    <div class="uk-container uk-container-center">
+        {!! Breadcrumbs::render() !!}
+    </div>
+</div>
 <div class="uk-container uk-container-center">
     <div class="main-content">
+
+
         @include('backend.messages')
         @yield('content')
     </div>

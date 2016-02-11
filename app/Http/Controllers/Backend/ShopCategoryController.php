@@ -11,7 +11,7 @@ use App\Models\Shop\Category;
 use App\Models\Shop\Field;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Request;
-
+use App\Photo;
 
 class ShopCategoryController extends Controller
 {
@@ -63,6 +63,11 @@ class ShopCategoryController extends Controller
             $category->fields()->attach($request->get('fields'));
         }
 
+        if ($request->has('photos')) {
+            $photos = Photo::whereIn('id', $request->get('photos'))->get();
+            $category->photos()->saveMany($photos);
+        }
+
         Session::flash('message', 'Категория создана');
         return redirect()->route('manager.shop.category.index');
     }
@@ -107,6 +112,11 @@ class ShopCategoryController extends Controller
 
         if ($request->has('fields')) {
             $category->fields()->sync($request->get('fields'));
+        }
+
+        if ($request->has('photos')) {
+            $photos = Photo::whereIn('id', $request->get('photos'))->get();
+            $category->photos()->saveMany($photos);
         }
 
         Session::flash('message', 'Категория изменено');

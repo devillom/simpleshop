@@ -8,12 +8,18 @@
             {!! Form::text('name',null,['class'=>'uk-width-1-1']) !!}
         </div>
         <div class="uk-form-row">
+            <label class="uk-form-label">Категория</label>
+            {!! Form::select('category_id',$categories,$categoryId,['class'=>'uk-width-1-1'])  !!}
+        </div>
+        <div class="uk-form-row">
             <label class="uk-form-label">Тип ввода</label>
+
             {!! Form::select('type',[
                 'value_str' => 'Строка',
                 'value_int' => 'Число',
                 'value_text' => 'Текст',
                 'value_dt' => 'Выбор даты',
+                'value_select' => 'Список',
             ],null,['class'=>'uk-width-1-1'])  !!}
         </div>
         <div class="uk-form-row">
@@ -44,7 +50,7 @@
                     }
                     modal.hide();
                     @if(Route::currentRouteName() == 'field.index')
-                        $.get('{{route('field.index')}}', null, function (data) {
+                        $.get('{{route('field.index')}}?category_id={{$categoryId}}', null, function (data) {
                         $('.uk-table').html($(data).find('.uk-table').html())
                     });
                     @endif

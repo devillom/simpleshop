@@ -15,7 +15,7 @@
         {!! Form::email('email',$user->email,['class'=>'uk-form-width-large','placeholder'=>'Введите email']) !!}
     </div>
     <div class="uk-form-row">
-        {!! Form::select('roles[]',$roles,$user->roles->lists('id')->toArray(),['multiple'=>'multiple']) !!}
+        {!! Form::select('roles[]',$roles,$user->roles->lists('id')->toArray(),['multiple'=>'multiple','class'=>'chosen-select']) !!}
     </div>
     <div class="uk-form-row">
         {!! Form::password('password',['class'=>'uk-form-width-large','placeholder'=>'Введите новый пароль']) !!}

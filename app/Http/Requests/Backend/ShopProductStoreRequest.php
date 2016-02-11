@@ -32,6 +32,7 @@ class ShopProductStoreRequest extends Request
             'field.*.value_int' => 'numeric',
             'field.*.value_str' => 'max:255',
             'field.*.value_dt' => 'date',
+            'field.*.value_select' => 'exists:shop_field_options,id',
         ];
     }
 }

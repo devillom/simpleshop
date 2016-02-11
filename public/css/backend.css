@@ -1,20 +1,27 @@
 .uk-navbar-attached {
+  padding: 10px 0;
   border: 0 !important;
   border-radius: 0 !important;
-  background: #001f3d;
+  background-image: linear-gradient(141deg, #1F1A25 0%, #673AB7 71%, #8E24AA 100%);
   color: #fff;
   text-shadow: none; }
   .uk-navbar-attached .uk-navbar-brand {
     padding-left: 0;
     text-shadow: none !important;
     color: #fff; }
-  .uk-navbar-attached .uk-navbar-nav > li > a {
-    color: #fff !important;
-    text-shadow: none !important; }
-    .uk-navbar-attached .uk-navbar-nav > li > a:active {
-      background-color: none; }
-  .uk-navbar-attached .uk-navbar-nav > li.active > a {
-    background: #0f7595; }
+  .uk-navbar-attached .uk-navbar-nav > li {
+    margin-right: 5px; }
+    .uk-navbar-attached .uk-navbar-nav > li > a {
+      color: #fff !important;
+      text-shadow: none !important;
+      border-radius: 4px !important; }
+      .uk-navbar-attached .uk-navbar-nav > li > a:active {
+        background-color: #0C355D; }
+      .uk-navbar-attached .uk-navbar-nav > li > a:hover, .uk-navbar-attached .uk-navbar-nav > li > a:focus {
+        background: rgba(11, 65, 117, 0.38);
+        box-shadow: none; }
+    .uk-navbar-attached .uk-navbar-nav > li.active > a {
+      background: rgba(11, 65, 117, 0.38); }
   .uk-navbar-attached .uk-dropdown a {
     color: #000 !important; }
     .uk-navbar-attached .uk-dropdown a:hover {
@@ -28,6 +35,15 @@ h1, h2, h3, h4, h5 {
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700; }
 
+.breadcrumbs-wrapper {
+  background: #c0c0c0;
+  background-image: linear-gradient(141deg, #D8D8D8 0%, #BFBFBF 71%, #868686 100%); }
+  .breadcrumbs-wrapper .uk-breadcrumb {
+    margin: 10px 0;
+    color: #fff; }
+    .breadcrumbs-wrapper .uk-breadcrumb a {
+      color: #fff; }
+
 .main-content {
   padding: 20px 0;
   min-height: 700px; }
@@ -37,7 +53,7 @@ h1, h2, h3, h4, h5 {
   color: #000; }
   .footer .uk-text-center {
     padding-top: 30px;
-    border-top: 2px solid #999; }
+    border-top: 2px solid #ccc; }
 
 .uk-table td {
   vertical-align: middle;

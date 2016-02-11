@@ -19,6 +19,7 @@ class CreateShopFieldValuesTable extends Migration
             $table->integer('value_int')->nullable();
             $table->text('value_text')->nullable();
             $table->date('value_dt')->nullable();
+            $table->integer('value_select')->nullable();
             $table->integer('product_id')->unsigned();
             $table->integer('field_id')->unsigned();
             $table->timestamps();

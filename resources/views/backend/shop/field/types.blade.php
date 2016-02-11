@@ -17,5 +17,10 @@
             <label class="uk-form-label">{{$field->name}}</label>
             {!! Form::datetime('field['.$field->id.'][value_dt]',(!is_null($productId) && !is_null($field->getValue($productId) ))?$field->getValue($productId)->value_dt:null) !!}
         @endif
+
+            @if($field->type == 'value_select')
+                <label class="uk-form-label">{{$field->name}}</label>
+                {!! Form::select('field['.$field->id.'][value_select]',$field->options()->lists('name','id')->toArray(),(!is_null($productId) && !is_null($field->getValue($productId) ))?$field->getValue($productId)->value_select:null)!!}
+            @endif
     </div>
 @endforeach
