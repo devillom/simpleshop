@@ -17,7 +17,6 @@ class CreateShopFieldOptionsTable extends Migration
             $table->string('value');
             $table->text('content')->nullable();
             $table->integer('field_id')->index();
-            $table->integer('child_field_id')->index();
         });
     }
 

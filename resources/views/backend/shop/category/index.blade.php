@@ -13,12 +13,14 @@
         <li><a href="{{route('manager.shop.category.reorder')}}">Сортировка</a></li>
     </ul>
     <br>
+
     <table class="uk-table uk-table-hover uk-table-striped">
         <thead>
         <tr>
             <th>ID</th>
             <th>Название</th>
             <th>Родитель</th>
+            <th class="uk-text-center">Кол. товаров</th>
             <th class="uk-text-right">Действие</th>
         </tr>
         <tbody>
@@ -27,8 +29,8 @@
                 <td>{{$category->id}}</td>
                 <td>{{$category->name}}</td>
                 <td>{{$category->parent['name']}}</td>
+                <td class="uk-text-center">{{$category->products()->count()}}</td>
                 <td class="uk-text-right">
-
                     {!! Form::open(['route' => ['manager.shop.category.destroy',$category->id] ,'method'=>'delete','class'=>'confirm'])!!}
                     <a href="{{ route('manager.shop.category.edit', ['category' => $category->id])}}"
                        class="uk-button uk-button-primary">
@@ -43,10 +45,11 @@
         </thead>
     </table>
 
-    {!! str_replace('pagination','uk-pagination',$categories->render()) !!}
+    {{--{!! str_replace('pagination','uk-pagination',$categories->render()) !!}--}}
 @endsection
 
 @section('scripts')
+    @parent
     <script>
 
     </script>

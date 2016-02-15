@@ -1,0 +1,40 @@
+.hamburger{
+  a{
+    i{
+      font-size: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .header{
+    .middle {
+      padding: 15px 0;
+    }
+  }
+  .recomended-list{
+    h3{
+      margin-top: 0 !important;
+    }
+    .item{
+      margin-bottom: 20px;
+    }
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .header{
+    .middle {
+      padding: 15px 0;
+    }
+  }
+  .recomended-list{
+    h3{
+      margin-top: 0 !important;
+    }
+    .item{
+      margin-bottom: 20px;
+    }
+  }
+}

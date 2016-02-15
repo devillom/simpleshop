@@ -5,7 +5,7 @@
 @section('scripts')
     @parent
     <script>
-        $('.edit-field').on('click', function () {
+        $(document).on('click','.edit-field', function () {
             $.get($(this).data('edit'), null, function (data) {
                 $('#editFieldModal').html(data);
             });

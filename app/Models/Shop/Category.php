@@ -4,6 +4,7 @@ namespace App\Models\Shop;
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+use Illuminate\Support\Facades\Session;
 use Kalnoy\Nestedset\Node;
 use App\Photo;
 class Category extends Node implements SluggableInterface
@@ -36,6 +37,19 @@ class Category extends Node implements SluggableInterface
     public function photos()
     {
         return $this->morphMany(Photo::class, 'imageable');
+    }
+
+
+    public static function boot()
+    {
+        parent::boot();
+        Category::deleting(function ($category) {
+
+            if (count($category->children) || count($category->products)) {
+                Session::flash('error','Сначало удалите подкатегории и товары!');
+                return false;
+            }
+        });
     }
 
 
@@ -81,16 +95,6 @@ class Category extends Node implements SluggableInterface
                 }
             }
         }
-    }
-
-    /**
-     * a method to get the children by order
-     * @param type $categories
-     * @return type
-     */
-    public function getChildren()
-    {
-        return $this->children()->orderBy('_lft')->get();
     }
 
 

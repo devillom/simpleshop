@@ -2,7 +2,7 @@
     <div class="uk-modal-dialog">
         <a class="uk-modal-close uk-close"></a>
         <div class="uk-modal-header">Добавить новое поле</div>
-        {!! Form::open(['route' => ['field.store'] ,'method'=>'post','class' => 'uk-form uk-form-stacked'])!!}
+        {!! Form::open(['route' => ['manager.shop.field.store'] ,'method'=>'post','class' => 'uk-form uk-form-stacked'])!!}
         <div class="uk-form-row">
             <label class="uk-form-label">Название</label>
             {!! Form::text('name',null,['class'=>'uk-width-1-1']) !!}
@@ -40,7 +40,7 @@
 
         $('#addFieldModal form').on('submit', function (event) {
             event.preventDefault();
-            $.post('{{route('field.store')}}', $(this).serialize(), function (data) {
+            $.post('{{route('manager.shop.field.store')}}', $(this).serialize(), function (data) {
 
                 if (data.status == 'ok') {
                     toastr.success('Характеристика добавлена', 'Сообщение системы');
@@ -49,8 +49,8 @@
                         $(".chosen-select").trigger("chosen:updated");
                     }
                     modal.hide();
-                    @if(Route::currentRouteName() == 'field.index')
-                        $.get('{{route('field.index')}}?category_id={{$categoryId}}', null, function (data) {
+                    @if(Route::currentRouteName() == 'manager.shop.field.index')
+                        $.get('{{route('manager.shop.field.index')}}?category_id={{$categoryId}}', null, function (data) {
                         $('.uk-table').html($(data).find('.uk-table').html())
                     });
                     @endif

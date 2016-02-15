@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
-        return view('home',compact('products'));
+        $products = Product::with('fields')->take(4)->get();
+        return view('frontend.home',compact('products'));
     }
 }

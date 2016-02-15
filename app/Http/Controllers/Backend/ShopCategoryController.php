@@ -15,6 +15,13 @@ use App\Photo;
 
 class ShopCategoryController extends Controller
 {
+    protected $perPage;
+
+    public function __construct()
+    {
+       $this->perPage = 20;
+    }
+    
     /**
      * Category list
      *
@@ -22,8 +29,7 @@ class ShopCategoryController extends Controller
      */
     public function index()
     {
-
-        $categories = Category::orderBy('id', 'desc')->paginate(20);
+        $categories = Category::orderBy('id','desc')->paginate($this->perPage);
         return view('backend.shop.category.index', compact('categories'));
     }
 
@@ -132,8 +138,9 @@ class ShopCategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
-        Session::flash('message', 'Категория удалено');
+        if($category->delete()){
+            Session::flash('message', 'Категория удалено');
+        }
         return redirect()->route('manager.shop.category.index');
     }
 

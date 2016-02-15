@@ -13,7 +13,8 @@ class Field extends Model
         'name',
         'content',
         'type',
-        'category_id'
+        'category_id',
+        'option_id'
     ];
 
     public function products()
@@ -35,6 +36,11 @@ class Field extends Model
     public function options()
     {
         return $this->hasMany(FieldOption::class);
+    }
+
+    public function option()
+    {
+        return $this->belongsTo(FieldOption::class,'option_id');
     }
 
     public function getValue($product_id)

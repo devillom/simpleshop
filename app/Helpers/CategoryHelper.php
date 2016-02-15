@@ -25,7 +25,7 @@ function renderSortableNode($node)
         $html = '<li class="uk-nestable-item uk-parent" data-id="' . $node->id . '">
                     <div class="uk-nestable-panel">
                         <i class="uk-nestable-handle uk-icon uk-icon-bars uk-margin-small-right"></i>
-                       ' . $node->name . '
+                       ' . $node->name.''.renderForm($node). '
                     </div>';
 
         $html .= '<ul class="uk-nestable-list">';
@@ -42,17 +42,21 @@ function renderSortableNode($node)
 }
 
 
-function renderNode($node)
+function renderMenu($node)
 {
-    if ($node->isLeaf()) {
-        return '<li>' . $node->name . '</li>';
-    } else {
-        $html = '<li>' . $node->name;
+    if (!$node->hasParent() || !$node->children()->count()) {
+        return '
+         <li>
+            <a href="">'.$node->name.'</a>
+         </li>';
 
-        $html .= '<ul>';
+    } else {
+        $html = '<li >
+                    <a href="#">'.$node->name.'<i class="carret"></i></a>';
+        $html .= '<ul >';
 
         foreach ($node->children as $child)
-            $html .= renderNode($child);
+            $html .= renderMenu($child);
 
         $html .= '</ul>';
 
@@ -60,4 +64,18 @@ function renderNode($node)
     }
 
     return $html;
+}
+
+
+function renderForm($node)
+{
+    $html = Form::open(['route' => ['manager.shop.category.destroy', $node->id], 'method' => 'delete', 'class' => 'confirm uk-float-right']) .
+        "<a href=\"".route('manager.shop.category.edit', ['category' => $node->id])."\"
+                       class=\"uk-button uk-button-small uk-button-primary\">
+                        <i class=\"uk-icon uk-icon-edit\"></i> </a>
+                    <button type=\"submit\" class=\"uk-button uk-button-small uk-button-danger\"><i class=\"uk-icon uk-icon-trash\"></i>
+                    </button>" . Form::close();
+
+    return $html;
+
 }

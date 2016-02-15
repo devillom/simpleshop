@@ -15,6 +15,11 @@ class FieldOption extends Model
         return $this->belongsTo(Field::class);
     }
 
+    public function fields()
+    {
+        return $this->hasMany(Field::class,'option_id');
+    }
+
     protected $fillable = [
         'name','content','field_id'
     ];

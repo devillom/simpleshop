@@ -8,8 +8,8 @@ h1,h2,h3,h4,h5{
 }
 
 .breadcrumbs-wrapper{
-  background: #c0c0c0;
-  background-image: linear-gradient(141deg, #D8D8D8 0%, #BFBFBF 71%, #868686 100%);
+  background: #9F4997;
+
   .uk-breadcrumb{
     margin: 10px 0;
     color: #fff;
@@ -34,10 +34,28 @@ h1,h2,h3,h4,h5{
   }
 }
 
+.nestable-list{
+  max-width:500px;
+  margin: 0 auto;
+}
+.uk-nestable-panel{
+  form{
+    position: relative;
+    top:-3px;
+
+  }
+}
 .uk-table{
   td{
     vertical-align: middle;
     font-size:16px;
+
+  }
+
+  .sub-fields{
+
+    background: #ccc;
+
   }
 }
 

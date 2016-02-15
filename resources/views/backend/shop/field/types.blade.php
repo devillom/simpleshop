@@ -20,7 +20,21 @@
 
             @if($field->type == 'value_select')
                 <label class="uk-form-label">{{$field->name}}</label>
-                {!! Form::select('field['.$field->id.'][value_select]',$field->options()->lists('name','id')->toArray(),(!is_null($productId) && !is_null($field->getValue($productId) ))?$field->getValue($productId)->value_select:null)!!}
+                {!! Form::select('field['.$field->id.'][value_select]',[''=>'Выберите']+$field->options()->lists('name','id')->toArray(),(!is_null($productId) && !is_null($field->getValue($productId) ))?$field->getValue($productId)->value_select:null,['class'=>'select-list','data-id'=>$field->id])!!}
+
+
             @endif
     </div>
+    @if($field->type == 'value_select')
+    <div class="uk-form-row" id="fields-{{$field->id}}">
+        @if(!is_null($productId) && !is_null($field->getValue($productId) ))
+            <?php
+            $option = App\Models\Shop\FieldOption::with('fields')->find($field->getValue($productId)->value_select);
+            $rFields = $option->fields;
+            ?>
+            @include('backend.shop.field.types',['fields'=>$rFields,'productId'=>$productId])
+        @endif
+    </div>
+    @endif
+
 @endforeach

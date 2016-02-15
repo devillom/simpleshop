@@ -9,18 +9,20 @@
                 @foreach($products as $product)
                     <div class="col-xs-3">
                         <div class="inner">
-                            @if(count($product->photos))
+                            @if($product->photos()->count())
                                 <img src="{{ Image::url($product->photos->first()->path,213,213) }}" alt="">
                             @else
                                 <img src="uploads/default-image(213x213).png" alt="">
                             @endif
                             <h4>{{$product->name}}</h4>
                             <div class="price">{{$product->price}}</div>
-                            <ul class="">
-                                @foreach($product->fields as $field)
-                                   <li>{{$field->name}}: {{$field->getValue($product->id)->{$field->type} }}</li>
-                                @endforeach
-                            </ul>
+                            @if(!is_null($product->fields))
+                            {{--<ul class="">--}}
+                                {{--@foreach($product->fields as $field)--}}
+                                    {{--<li>{{$field->name}}: {{$field->getValue($product->id)->{$field->type} }}</li>--}}
+                                {{--@endforeach--}}
+                            {{--</ul>--}}
+                            @endif
 
                         </div>
                     </div>

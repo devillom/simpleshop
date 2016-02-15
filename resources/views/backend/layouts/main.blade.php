@@ -31,7 +31,9 @@
 <body>
 <nav class="tm-navbar uk-navbar uk-navbar-attached">
     <div class="uk-container uk-container-center">
-        <a href="" class="uk-navbar-brand">Simple-Shop v 0.1</a>
+        <a href="" class="uk-navbar-brand">
+            <img src="{{ asset('images/logo_mobile.png') }}" alt="">
+        </a>
         <ul class="uk-navbar-nav">
             <li @if(Route::getCurrentRoute()->getName()=='manager.index') class="active" @endif>
                 <a href="{{route('manager.index')}}" >Главная</a>
@@ -39,7 +41,7 @@
             <li @if(Route::getCurrentRoute()->getName()=='manager.user.index') class="active" @endif>
                 <a href="{{route('manager.user.index')}}" >Пользователи</a>
             </li>
-            <li class="uk-parent" data-uk-dropdown><a  >Магазин</a>
+            <li class="uk-parent @if(strpos(Route::getCurrentRoute()->getName(),'manager.shop') !== false) active @endif" data-uk-dropdown ><a  >Магазин</a>
                 <div class="uk-dropdown uk-dropdown-navbar">
                     <ul class="uk-nav uk-nav-navbar">
                         <li @if(Route::getCurrentRoute()->getName()=='manager.shop.category.index') class="active" @endif>
@@ -48,8 +50,8 @@
                         <li @if(Route::getCurrentRoute()->getName()=='manager.shop.product.index') class="active" @endif>
                             <a href="{{route('manager.shop.product.index')}}">Товары</a>
                         </li>
-                        <li @if(Route::getCurrentRoute()->getName()=='field.index') class="active" @endif>
-                            <a href="{{route('field.index')}}">Дополнительные поля</a>
+                        <li @if(Route::getCurrentRoute()->getName()=='manager.shop.field.index') class="active" @endif>
+                            <a href="{{route('manager.shop.field.index')}}">Параметры категории</a>
                         </li>
                         <li @if(Route::getCurrentRoute()->getName()=='manager.shop.setting.index') class="active" @endif>
                             <a href="{{route('manager.shop.setting.index')}}">Настройки</a>
@@ -61,6 +63,7 @@
         </ul>
     </div>
 </nav>
+
 <div class="breadcrumbs-wrapper">
     <div class="uk-container uk-container-center">
         {!! Breadcrumbs::render() !!}
@@ -77,7 +80,7 @@
 
 <div class="footer">
     <div class="uk-container uk-container-center">
-        <div class="uk-text-center">Simple-Shop v 0.1 - 2016</div>
+        <div class="uk-text-center">  <img src="{{ asset('images/logo.png') }}" alt=""> <br> v. 0.1</div>
     </div>
 </div>
 

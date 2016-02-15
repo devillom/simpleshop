@@ -1,7 +1,7 @@
 <div class="uk-modal-dialog">
     <a class="uk-modal-close uk-close"></a>
     <div class="uk-modal-header">Изменить поле</div>
-    {!! Form::open(['route' => ['field.update',$field->id] ,'method'=>'patch','class' => 'uk-form uk-form-stacked'])!!}
+    {!! Form::open(['route' => ['manager.shop.field.update',$field->id] ,'method'=>'patch','class' => 'uk-form uk-form-stacked'])!!}
     <div class="uk-form-row">
         <label class="uk-form-label">Название</label>
         {!! Form::text('name',$field->name,['class'=>'uk-width-1-1']) !!}

@@ -70,8 +70,8 @@ Breadcrumbs::register('manager.shop.product.create', function($breadcrumbs)
 });
 
 
-Breadcrumbs::register('field.index', function($breadcrumbs)
+Breadcrumbs::register('manager.shop.field.index', function($breadcrumbs)
 {
     $breadcrumbs->parent('manager.index');
-    $breadcrumbs->push('Дополнительные поля', route('field.index'));
+    $breadcrumbs->push('Дополнительные поля', route('manager.shop.field.index'));
 });
